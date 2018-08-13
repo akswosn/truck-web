@@ -25,7 +25,7 @@ class Login extends Component {
 		fetch('http://52.79.177.67:5051/api/org_user/login', {
 			credentials: 'same-origin'  ,
 			method: 'post',
-			body: JSON.stringify(object),
+			body: object,
 			mode: 'no-cors',
 			headers:{
 				'Access-Control-Allow-Origin':'*'
