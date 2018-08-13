@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import '../styles/app.css';
 import Map from '../component/Map'
 
-class Control extends Component {
+class Search extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {isToggleOn: true};
 
 		
 		this.getLogint = this.getLogint.bind(this);
-		this.getLogint();
 	}
 	getLogint(){
 		if(sessionStorage.length == 0 ){
@@ -61,4 +60,4 @@ class Control extends Component {
 	}
 }
 
-export default Control;
+export default Search;

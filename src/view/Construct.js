@@ -3,6 +3,28 @@ import '../styles/app.css';
 
 
 class Construct extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {isToggleOn: true};
+
+		
+		this.getLogint = this.getLogint.bind(this);
+		this.getLogint();
+	}
+	getLogint(){
+		if(sessionStorage.length == 0 ){
+			alert('로그인후 이용해주세요');
+			window.location.href = '/login';
+		}
+
+		var id = sessionStorage.getItem("id");
+		var name = sessionStorage.getItem("name");
+
+		if(id !== null || name !== null ){
+			alert('로그인후 이용해주세요');
+			window.location.href = '/login';
+		}
+	}
 
 	render () {
 

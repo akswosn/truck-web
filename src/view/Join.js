@@ -46,13 +46,13 @@ class Join extends Component {
 	
 	submitAction(e){
 		e.preventDefault();
-		// const object = {
-		// 	name: this.state.name,
-		// 	password: this.state.password,
-		// 	owner: this.state.owner,
-		// 	contact: this.state.contact,
-		// 	biz_number: this.state.biz_number
-		// }
+		const object = {
+			name: this.state.name,
+			password: this.state.password,
+			owner: this.state.owner,
+			contact: this.state.contact,
+			buz_number: this.state.buz_number
+		}
 		
 		for(var i in this.state){
 		// 	// console.log('key',i)
@@ -61,14 +61,15 @@ class Join extends Component {
 			this.fromData.append(i, this.state[i]+'');
 		}
 		this.fromData.append('name', 't');
-		console.log(this.fromData.get('name'));
+		//console.log(this.fromData.get('name'));
 		
-		fetch('http://localhost:5051/api/org_user/reg', {
+		fetch('http://52.79.177.67:5051/api/org_user/reg', {
 			method: 'POST',
-			body: this.fromData,
+			body: JSON.stringify(object),
 			mode: 'no-cors',
+			//type:'json',
 			headers:{
-				//'Accept': 'application/json',
+				'Accept': 'application/json',
       			'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin':'*'
 			},
@@ -84,7 +85,11 @@ class Join extends Component {
 			
         })
         .then(function(data) {
-			console.log(data);
+			//
+			if(data != null && data != undefined){
+				alert('회원가입 되셨습니다.');
+				window.location.href = '/login';
+			}
 		});	
 		
 		// axios({
@@ -136,8 +141,8 @@ class Join extends Component {
 						<input className="form-input" placeholder="연락처"  id="contact" value={this.state.contact} onChange={e => this.handleChange(e)}/>
 					</div>
 					<div className="form-group">
-						<label className="form-label" htmlFor="biz_number">사업자번호</label>
-						<input className="form-input" placeholder="사업자번호"  id="biz_number" value={this.state.biz_number} onChange={e => this.handleChange(e)}/>
+						<label className="form-label" htmlFor="buz_number">사업자번호</label>
+						<input className="form-input" placeholder="사업자번호"  id="buz_number" value={this.state.buz_number} onChange={e => this.handleChange(e)}/>
 					</div>
 					<div className="btn-area">
 						<button className="btn" onClick={this.cancelAction}>취소</button>

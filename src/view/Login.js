@@ -14,6 +14,15 @@ class Login extends Component {
 		// This binding is necessary to make `this` work in the callback
 		
 		this.submitAction = this.submitAction.bind(this);
+		this.setLogint = this.setLogint.bind(this);
+	  }
+	  setLogint(data){
+		if(sessionStorage.length){
+			sessionStorage.clear();
+		}
+		for(var i in data){
+			sessionStorage.setItem(i, data[i]);
+		}
 	  }
 	  submitAction(e){
 		e.preventDefault();
@@ -25,19 +34,34 @@ class Login extends Component {
 		fetch('http://52.79.177.67:5051/api/org_user/login', {
 			credentials: 'same-origin'  ,
 			method: 'post',
-			body: object,
+			body: JSON.stringify(object),
 			mode: 'no-cors',
 			headers:{
+				'Accept': 'application/json',
+      			'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin':'*'
 			},
 			
         })
         .then(function(response) {
 			console.log(response);
+			if(response.status != 200){
+				//오류
+				alert('로그인 실패!');
+			}
+			
 			
         })
         .then(function(data) {
+			//
 			console.log(data);
+			console.log(sessionStorage);
+			if(data != null && data != undefined){
+				//alert('로그인 되셨습니다.');
+				//window.location.href = '/';
+				this.setLogint(data);
+				window.location.href = '/';
+			}
 		});	
 	}
 
