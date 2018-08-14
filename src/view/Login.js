@@ -17,12 +17,15 @@ class Login extends Component {
 		this.setLogint = this.setLogint.bind(this);
 	  }
 	  setLogint(data){
+		console.log(data);
 		if(sessionStorage.length){
 			sessionStorage.clear();
 		}
 		for(var i in data){
+			console.log(i);
 			sessionStorage.setItem(i, data[i]);
 		}
+		console.log(sessionStorage);
 	  }
 	  submitAction(e){
 		e.preventDefault();
@@ -38,10 +41,14 @@ class Login extends Component {
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
-		}).done((data) => {
-			console.log(data);
+		}).done((res) => {
+			
+			this.setLogint(res.data);
+			window.location.href='/';
 		}).fail((res) => {
 			console.log(res);
+			console.log(res.responseJSON);
+			alert(res.responseJSON.error);
 		});
 		
 		// fetch('http://localhost:5051/api/org_user/login', {

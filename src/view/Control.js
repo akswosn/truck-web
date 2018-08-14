@@ -15,14 +15,16 @@ class Control extends Component {
 		if(sessionStorage.length == 0 ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
+			return;
 		}
 
 		var id = sessionStorage.getItem("id");
 		var name = sessionStorage.getItem("name");
 
-		if(id !== null || name !== null ){
+		if(id == null || name == null ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
+			return;
 		}
 	}
 	render () {

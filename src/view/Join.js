@@ -58,14 +58,20 @@ class Join extends Component {
 		//console.log(this.fromData.get('name'));
 		$.ajax({
 			type: 'POST',
-			url: 'http://52.79.177.67:5051/api/org_user/reg',
+			url: 'http://localhost:5051/api/org_user/reg',
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
-		}).done((data) => {
-			console.log(data);
+		}).done((res) => {
+			if(res.data != null && res.data != undefined){
+				alert('회원가입 되셨습니다.');
+				window.location.href = '/login';
+			}
+			
 		}).fail((res) => {
 			console.log(res);
+			console.log(res.responseJSON);
+			alert(res.responseJSON.error);
 		});
 		// fetch('http://52.79.177.67:5051/api/org_user/reg', {
 		// 	method: 'POST',
