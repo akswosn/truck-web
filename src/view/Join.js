@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
 // import axios from 'axios';
-var FormData = require('form-data');
+import $ from "jquery"
 
 // import { confirmAlert } from 'react-confirm-alert'; // Import
 
@@ -54,43 +54,47 @@ class Join extends Component {
 			buz_number: this.state.buz_number
 		}
 		
-		for(var i in this.state){
-		// 	// console.log('key',i)
-		// 	// console.log('v',this.state[i]);
-			
-			this.fromData.append(i, this.state[i]+'');
-		}
-		this.fromData.append('name', 't');
-		//console.log(this.fromData.get('name'));
 		
-		fetch('http://52.79.177.67:5051/api/org_user/reg', {
-			method: 'POST',
-			body: JSON.stringify(object),
-			mode: 'no-cors',
-			//type:'json',
-			headers:{
-				'Accept': 'application/json',
-      			'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin':'*'
-			},
+		//console.log(this.fromData.get('name'));
+		$.ajax({
+			type: 'POST',
+			url: 'http://52.79.177.67:5051/api/org_user/reg',
+			data: object,
+			headers: {'Access-Control-Allow-Origin': '*'},
+                            
+		}).done((data) => {
+			console.log(data);
+		}).fail((res) => {
+			console.log(res);
+		});
+		// fetch('http://52.79.177.67:5051/api/org_user/reg', {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(object),
+		// 	mode: 'no-cors',
+		// 	//type:'json',
+		// 	headers:{
+		// 		'Accept': 'application/json',
+      	// 		'Content-Type': 'application/json',
+		// 		'Access-Control-Allow-Origin':'*'
+		// 	},
 			
-        })
-        .then(function(response) {
-			console.log(response);
-			if(response.status != 200){
-				//오류
-				alert('회원가입 실패!');
-			}
+        // })
+        // .then(function(response) {
+		// 	console.log(response);
+		// 	if(response.status != 200){
+		// 		//오류
+		// 		alert('회원가입 실패!');
+		// 	}
 			
 			
-        })
-        .then(function(data) {
-			//
-			if(data != null && data != undefined){
-				alert('회원가입 되셨습니다.');
-				window.location.href = '/login';
-			}
-		});	
+        // })
+        // .then(function(data) {
+		// 	//
+		// 	if(data != null && data != undefined){
+		// 		alert('회원가입 되셨습니다.');
+		// 		window.location.href = '/login';
+		// 	}
+		// });	
 		
 		// axios({
 		// 	method: 'post',
