@@ -213,7 +213,7 @@ class Construct extends Component {
 	getTruckType(){
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/trucktype',
+			url: 'http://52.79.177.67:5051/api/consite/trucktype',
 			data: {},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -244,7 +244,7 @@ class Construct extends Component {
 	getSoilType(){
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/soiltype',
+			url: 'http://52.79.177.67:5051/api/consite/soiltype',
 			data: {},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -275,7 +275,7 @@ class Construct extends Component {
 	getSiteType(){
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/sitetype',
+			url: 'http://52.79.177.67:5051/api/consite/sitetype',
 			data: {},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -347,7 +347,7 @@ class Construct extends Component {
 		console.log(object);
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/reg',
+			url: 'http://52.79.177.67:5051/api/consite/reg',
 			data: object,
 			headers: {
 				'Access-Control-Allow-Origin': '*',

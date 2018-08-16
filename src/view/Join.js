@@ -56,7 +56,7 @@ class Join extends Component {
 		//console.log(this.fromData.get('name'));
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/org_user/reg',
+			url: 'http://52.79.177.67:5051/api/org_user/reg',
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             

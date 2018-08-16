@@ -201,7 +201,7 @@ class Control extends Component {
 		var object = {}
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/find',
+			url: 'http://52.79.177.67:5051/api/consite/find',
 			data: object,
 			headers: {
 				'Access-Control-Allow-Origin': '*',

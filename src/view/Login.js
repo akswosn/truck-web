@@ -37,7 +37,7 @@ class Login extends Component {
 
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/org_user/login',
+			url: 'http://52.79.177.67:5051/api/org_user/login',
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
