@@ -36,9 +36,7 @@ class Join extends Component {
 		
 		// This binding is necessary to make `this` work in the callback
 		this.cancelAction = this.cancelAction.bind(this);
-		this.submitAction = this.submitAction.bind(this);
-		this.fromData = new FormData();
-		
+		this.submitAction = this.submitAction.bind(this);		
 	}
 	cancelAction(e){
 		window.location.href='/';

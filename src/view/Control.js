@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
-import Map from '../component/Map'
+
+import $ from "jquery"
+import Select from 'react-select';
+import {
+	Map as NaverMap,
+	loadNavermapsScript,
+  } from 'react-naver-maps'
+ import Loadable from 'react-loadable'
+
+ const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
 
 class Control extends Component {
 	constructor(props) {
@@ -11,13 +20,188 @@ class Control extends Component {
 		this.user.id = '';
 		this.user.name = '';
 		this.user.password = '';
-
-
+		this.state.map = false;
+		this.state.zoom = 10;
+		this.state.markers = [];
+		this.state.circle = [];
+		this.state.conssiteVal = 0;
+		
+		this.state.options = [];
+		this.state.conssite = [];
+		this.state.form_markers = [];
+		this.state.to_markers = [];
+		this.state.lat = '';
+		this.state.lon = '';
+			
 		this.getLogin = this.getLogin.bind(this);
+		this.initConssite = this.initConssite.bind(this);
+		this.mapZoomIn = this.mapZoomIn.bind(this);
+		this.setMarkers = this.setMarkers.bind(this);
+		this.mapRefresh = this.mapRefresh.bind(this);
+		this.mapCenterMove = this.mapCenterMove.bind(this);
+		this.handleChangeSelect = this.handleChangeSelect.bind(this);
 		this.getLogin();
-	}
+		this.initConssite();
 
+	}
+	mapCenterMove(lat, lon){
+		this.state.map.setOptions({
+			center : new this.navermaps.LatLng(lat, lon)
+		});
+	}
+	mapZoomIn(){
+		this.state.zoom++;
+		this.state.map.setOptions({
+			zoom : this.state.zoom 
+		});
+	}
+	mapRefresh(){
+		this.state.zoom = 10
+		this.mapInit(this.state.lat, this.state.lon, this.state.zoom);
+	}
+	mapInit(lat, lon, zoom){
+		this.setState({loaded:true});
+		console.log(lat);
+		console.log(lon);
+		console.log(zoom);
+		this.state.map  = new this.navermaps.Map('map',{
+			center : new this.navermaps.LatLng(lat, lon),
+			zoom : zoom
+		});
+		
+		this.setMarkers(0);
+	}
+	handleChangeSelect = (e) => {
+		
+		this.setState({
+			e
+		});
+		this.state.conssiteVal = e.id;
+		for(var i in this.state.form_markers){
+			if(e.value === this.state.form_markers[i].id){
+				this.mapCenterMove(this.state.form_markers[i].lat,this.state.form_markers[i].lon);
+			}
+		}
+		this.setMarkers(e.value);
+		
+	}
+	setMarkers(id){
+		//this.state.markers = [];
+
+		//clear
+		for(var i in this.state.markers){
+			this.state.markers[i].setMap(null);
+		}
+		this.state.markers = [];
+		for(var i in this.state.circle){
+			this.state.circle[i].setMap(null);
+		}
+		this.state.circle = [];
+		//clear end
+
+		console.log('id', id);
+		for(var i in this.state.form_markers){
+			if(id === 0 || id === this.state.form_markers[i].id){
+
+				var marker = new this.navermaps.Marker({
+					position:new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
+					map : this.state.map
+				})
 	
+				var circle = new this.navermaps.Circle({
+					map: this.state.map,
+					center: new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
+					radius: 500,
+					fillColor: 'blue',
+					fillOpacity: 0.3
+				});
+				this.state.markers.push(marker);
+				this.state.circle.push(circle);
+			}
+		}
+		for(var i in this.state.to_markers){
+			if(id === 0 || id === this.state.to_markers[i].id){
+				var marker = new this.navermaps.Marker({
+					position:new this.navermaps.LatLng(this.state.form_markers[i].to_lat, this.state.form_markers[i].to_lon),
+					map : this.state.map
+				});
+				var circle = new this.navermaps.Circle({
+					map: this.state.map,
+					center: new this.navermaps.LatLng(this.state.form_markers[i].to_lat, this.state.form_markers[i].to_lon),
+					radius: 500,
+					fillColor: 'red',
+					fillOpacity: 0.3
+				});
+				this.state.markers.push(marker);
+				this.state.circle.push(circle);
+			}
+		}
+		console.log(this.state.markers);
+	}
+	componentWillMount(){
+		//var HOME_PATH = window.HOME_PATH || '.';
+		var self = this;
+		//현재 위치 후 맵 오픈
+		navigator.geolocation.getCurrentPosition(function(pos){
+			self.state.lat = pos.coords.latitude;
+			self.state.lon = pos.coords.longitude;
+			loadNavermapsScript({clientId:CLIENT_ID})
+				.then((navermaps)=>{
+					self.navermaps=navermaps;
+					self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
+			
+					// var marker = new navermaps.Marker({
+					//     position:new navermaps.LatLng(37.4544266, 127.1309902),
+					//     map : map
+					// })
+				})
+		});
+		
+	}
+	initConssite(){
+		var object = {}
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:5051/api/consite/find',
+			data: object,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				user : JSON.stringify(this.user)
+			},
+			async : false                 
+		}).done((res) => {
+
+			console.log(res);
+			// this.state.options.push({
+			// 	value : 0,
+			// 	label : '전체'
+			// });
+			if(res.data != null && res.data != undefined){
+				var options = [];
+				for(var i in res.data){
+					var obj = {
+						value : res.data[i].id,
+						label : res.data[i].name
+					}
+					this.state.options.push(obj);
+					
+				}
+				//현재 위치
+				
+				//this.state.lat = res.data[0].lat;
+				//this.state.lon = res.data[0].lon;
+				this.state.conssite = res.data;
+				this.state.form_markers = res.data;
+				this.state.to_markers = res.data;
+				console.log(this.state.options);
+			}
+			
+		}).fail((res) => {
+			console.log(res);
+			console.log(res.responseJSON);
+			alert(res.responseJSON.error);
+		}); 
+	}
 
 	getLogin(){
 		if(sessionStorage.length == 0 ){
@@ -56,17 +240,21 @@ class Control extends Component {
 						1.지도
 					</span>
 					<span>
-				{/*<SelectInputGroup   label="현장"   value={this.state.inputSelect}   options={getSelectOption()}   />*/}
+						
+						
+						<Select inputProps={{ id: 'conssite' }} onChange={(e)=>this.handleChangeSelect(e)} id="conssite" options={this.state.options} value={this.state.conssiteVal}>
+							
+						</Select>
 					</span>
 					<span>
-						<button className="btn btn-link">+</button>
+						<button className="btn btn-link" onClick={()=>this.mapZoomIn()}>+</button>
 					</span>
 					<span>
-						<button className="btn-xs btn-primary">새로고침</button>
+						<button className="btn-xs btn-primary" onClick={()=>this.mapRefresh()}>새로고침</button>
 					</span>
 				</div>
 				<div>
-					<Map/>
+					<div id="map" style={{width:'100%',height:'500px'}}></div>
 				</div>
 			
 			</div>
