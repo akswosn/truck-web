@@ -10,6 +10,7 @@ import Push from './Push';
 import Login from './Login';
 import Join from './Join';
 import Search from './Search';
+import Detail from './Detail';
 
 var divStyle = {
 	float:'left',
@@ -37,6 +38,7 @@ const PageNav = () => (
 					<Route path="/login" component={Login} />
 					<Route path="/join" component={Join} />
 					<Route path="/search" component={Search} />
+					<Route path="/detail/:id" component={Detail} />
 			</div>
 		</div>
   </Router>

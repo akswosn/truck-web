@@ -24,6 +24,7 @@ class Control extends Component {
 		this.state.zoom = 10;
 		this.state.markers = [];
 		this.state.circle = [];
+		this.state.infoWindow = [];
 		this.state.conssiteVal = 0;
 		
 		this.state.options = [];
@@ -115,8 +116,16 @@ class Control extends Component {
 					fillColor: 'blue',
 					fillOpacity: 0.3
 				});
+				var infoWindow = new this.navermaps.InfoWindow({
+					content: '<div style="width:400px;text-align:center;padding:10px;">'
+						+ '<b>'+this.state.form_markers[i].name +'(출발지)</b><hr/>'
+						+ '주소 : '+ this.state.form_markers[i].addr
+						+ '</div>'
+				});
+			
 				this.state.markers.push(marker);
 				this.state.circle.push(circle);
+				this.state.infoWindow.push(infoWindow);
 			}
 		}
 		for(var i in this.state.to_markers){
@@ -132,11 +141,41 @@ class Control extends Component {
 					fillColor: 'red',
 					fillOpacity: 0.3
 				});
+
+				var infoWindow = new this.navermaps.InfoWindow({
+					content: '<div style="width:400px;text-align:center;padding:10px;">'
+						+ '<b><a target="_blank" href="/detail/'+this.state.to_markers[i].id+'">'+this.state.to_markers[i].name +'(목적지)</a></b><hr/>'
+						+ '주소 : '+ this.state.to_markers[i].to_addr
+						+ '</div>'
+				});
+
 				this.state.markers.push(marker);
 				this.state.circle.push(circle);
+				this.state.infoWindow.push(infoWindow);
 			}
 		}
 		console.log(this.state.markers);
+		console.log(this.state.infoWindow);
+
+		for (var i=0, ii= this.state.markers.length; i<ii; i++) {
+			this.navermaps.Event.addListener(this.state.markers[i], 'click', this.getClickHandler(i));
+		}
+		
+	}
+
+	getClickHandler(seq) {
+		var self = this;
+		return function(e) {
+			console.log(self.state.markers);
+			var marker = self.state.markers[seq];
+			var	infoWindow = self.state.infoWindow[seq];
+	
+			if (infoWindow.getMap()) {
+				infoWindow.close();
+			} else {
+				infoWindow.open(self.state.map, marker);
+			}
+		}
 	}
 	componentWillMount(){
 		//var HOME_PATH = window.HOME_PATH || '.';
