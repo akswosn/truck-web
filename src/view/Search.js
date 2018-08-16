@@ -7,10 +7,15 @@ class Search extends Component {
 		super(props);
 		this.state = {isToggleOn: true};
 
-		
-		this.getLogint = this.getLogint.bind(this);
+		this.user = {};
+		this.user.id = '';
+		this.user.name = '';
+		this.user.password = '';
+
+		this.getLogin = this.getLogin.bind(this);
+		this.getLogin();
 	}
-	getLogint(){
+	getLogin(){
 		if(sessionStorage.length == 0 ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
@@ -19,10 +24,13 @@ class Search extends Component {
 		var id = sessionStorage.getItem("id");
 		var name = sessionStorage.getItem("name");
 
-		if(id !== null || name !== null ){
+		if(id == null || name == null ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
 		}
+		this.user.id = id;
+		this.user.name = name;
+		this.user.password = sessionStorage.getItem("password");
 	}
 	render () {
 		// handle form input and validation

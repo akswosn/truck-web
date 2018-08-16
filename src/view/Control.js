@@ -7,11 +7,19 @@ class Control extends Component {
 		super(props);
 		this.state = {isToggleOn: true};
 
-		
-		this.getLogint = this.getLogint.bind(this);
-		this.getLogint();
+		this.user = {};
+		this.user.id = '';
+		this.user.name = '';
+		this.user.password = '';
+
+
+		this.getLogin = this.getLogin.bind(this);
+		this.getLogin();
 	}
-	getLogint(){
+
+	
+
+	getLogin(){
 		if(sessionStorage.length == 0 ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
@@ -26,6 +34,9 @@ class Control extends Component {
 			window.location.href = '/login';
 			return;
 		}
+		this.user.id = id;
+		this.user.name = name;
+		this.user.password = sessionStorage.getItem("password");
 	}
 	render () {
 		// handle form input and validation

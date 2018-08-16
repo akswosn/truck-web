@@ -14,9 +14,9 @@ class Login extends Component {
 		// This binding is necessary to make `this` work in the callback
 		
 		this.submitAction = this.submitAction.bind(this);
-		this.setLogint = this.setLogint.bind(this);
+		this.setLogin = this.setLogin.bind(this);
 	  }
-	  setLogint(data){
+	  setLogin(data){
 		console.log(data);
 		if(sessionStorage.length){
 			sessionStorage.clear();
@@ -43,7 +43,7 @@ class Login extends Component {
                             
 		}).done((res) => {
 			
-			this.setLogint(res.data);
+			this.setLogin(res.data);
 			window.location.href='/';
 		}).fail((res) => {
 			console.log(res);

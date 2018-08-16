@@ -2,6 +2,30 @@ import React, { Component } from 'react';
 import '../styles/app.css';
 
 class Main extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {isToggleOn: true};
+
+		this.user = {};
+		this.user.id = '';
+		this.user.name = '';
+		this.user.password = '';
+
+
+		this.getLogin = this.getLogin.bind(this);
+		this.getLogin();
+	}
+
+	
+
+	getLogin(){
+
+		this.user.id = sessionStorage.getItem("id");
+		this.user.name = sessionStorage.getItem("name");
+		this.user.password = sessionStorage.getItem("password");
+	}
+
+
   render() {
     return (
       <div className="page-container">

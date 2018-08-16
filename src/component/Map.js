@@ -1,6 +1,5 @@
 import React from 'react'
 
- 
 import {
   Map as NaverMap,
   loadNavermapsScript,
@@ -24,12 +23,12 @@ class Map extends React.Component {
         this.navermaps=navermaps;
         this.setState({loaded:true});
         map = new navermaps.Map('map',{
-            center : new navermaps.LatLng(37.2918741, 128.2710296),
+            center : new navermaps.LatLng(37.4544266, 127.1309902),
             zoom : 10
         });
 
         var marker = new navermaps.Marker({
-            position:new navermaps.LatLng(37.2918741, 128.2710296),
+            position:new navermaps.LatLng(37.4544266, 127.1309902),
             map : map
         })
     })

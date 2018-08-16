@@ -8,11 +8,16 @@ class Push extends Component {
 		super(props);
 		this.state = {isToggleOn: true};
 
+		this.user = {};
+		this.user.id = '';
+		this.user.name = '';
+		this.user.password = '';
+
+		this.getLogin = this.getLogin.bind(this);
+		this.getLogin();
 		
-		this.getLogint = this.getLogint.bind(this);
-		this.getLogint();
 	}
-	getLogint(){
+	getLogin(){
 		console.log(sessionStorage)
 		if(sessionStorage.length == 0 ){
 			alert('로그인후 이용해주세요');
@@ -28,6 +33,9 @@ class Push extends Component {
 			window.location.href = '/login';
 			return;
 		}
+		this.user.id = id;
+		this.user.name = name;
+		this.user.password = sessionStorage.getItem("password");
 	}
 	render () {
 		var self = this;
