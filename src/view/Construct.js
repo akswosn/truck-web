@@ -342,7 +342,7 @@ class Construct extends Component {
 			fee : this.state.fee,
 			need_fee : this.state.need_fee,
 			truck_type : this.state.truck_type.value,
-			contact : sessionStorage.getItem('contact')
+			contact : sessionStorage.getItem('contactgit push')
 		}
 		console.log(object);
 		$.ajax({
@@ -356,7 +356,8 @@ class Construct extends Component {
                             
 		}).done((res) => {
 			if(res.data != null && res.data != undefined){
-				
+				alert('등록되었습니다.');
+				window.location.href='/';
 			}
 			
 		}).fail((res) => {
