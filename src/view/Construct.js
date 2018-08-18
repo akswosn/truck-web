@@ -4,10 +4,9 @@ import $ from "jquery"
 import Select from 'react-select';
 import Modal from 'react-modal';
 import {
-	Map as NaverMap,
-	loadNavermapsScript,
+	
+	loadNavermapsScript
 } from 'react-naver-maps'
-import Loadable from 'react-loadable'
 const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
  
 
@@ -48,7 +47,7 @@ class Construct extends Component {
 		this.state.to_addr = '검색';
 		this.state.to_lat = '';
 		this.state.to_lon = '';
-		this.state.need_fee = 0;
+		this.state.need_quantity = 0;
 		this.state.truck_type = '';
 		this.state.soil_type = '';
 		this.state.site_type = '';
@@ -130,7 +129,7 @@ class Construct extends Component {
 		console.log(self.navermaps);
 		console.log(self.state);
 
-		if(self.state.addr != ''){
+		if(self.state.addr !== ''){
 			self.navermaps.Service.geocode({ address: self.state.addr }, function(status, response) {
 				if(status == 200){
 					// 성공시의 response 처리
@@ -163,7 +162,7 @@ class Construct extends Component {
 		console.log(self.navermaps);
 		console.log(self.state);
 
-		if(self.state.addr != ''){
+		if(self.state.addr !== ''){
 			self.navermaps.Service.geocode({ address: self.state.to_addr }, function(status, response) {
 				if(status == 200){
 					// 성공시의 response 처리
@@ -222,7 +221,7 @@ class Construct extends Component {
             async : false              
 		}).done((res) => {
 			console.log(res);
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				for(var i in res.data){
 					var obj = {
 						value : res.data[i].id,
@@ -253,7 +252,7 @@ class Construct extends Component {
 			async : false               
 		}).done((res) => {
 			console.log(res);
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				for(var i in res.data){
 					var obj = {
 						value : res.data[i].id,
@@ -284,7 +283,7 @@ class Construct extends Component {
 			async : false                
 		}).done((res) => {
 			console.log(res);
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				for(var i in res.data){
 					var obj = {
 						value : res.data[i].id,
@@ -340,7 +339,7 @@ class Construct extends Component {
 			quantity : this.state.quantity,
 			site_type : this.state.site_type.value,
 			fee : this.state.fee,
-			need_fee : this.state.need_fee,
+			need_quantity : this.state.need_quantity,
 			truck_type : this.state.truck_type.value,
 			contact : sessionStorage.getItem('contactgit push')
 		}
@@ -355,7 +354,7 @@ class Construct extends Component {
 			},
                             
 		}).done((res) => {
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				alert('등록되었습니다.');
 				window.location.href='/';
 			}
@@ -456,8 +455,8 @@ class Construct extends Component {
 					</div>
 					
 					<div className="form-group">
-						<label className="form-label" htmlFor="need_fee">필요수량</label>
-						<input className="form-input" placeholder="0" id="need_fee" value={this.state.need_fee} onChange={e => this.handleChange(e)}/>
+						<label className="form-label" htmlFor="need_quantity">필요수량</label>
+						<input className="form-input" placeholder="0" id="need_quantity" value={this.state.need_quantity} onChange={e => this.handleChange(e)}/>
 					</div>
 					<div className="form-group">
 						<label className="form-label" htmlFor="truck_type">덤프종류</label>

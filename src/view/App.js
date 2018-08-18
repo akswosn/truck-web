@@ -23,11 +23,12 @@ const PageNav = () => (
 		<div className="page-wrapper">
 			<nav className="primary-nav">
 				<Link to="/" className="logo" style={divStyle}>Truck Call</Link>
-				<Link className="primary-nav__item" to="control">관제시스템</Link>
-				<Link className="primary-nav__item" to="construct">현장정보입력</Link>
-				<Link className="primary-nav__item" to="push">푸쉬알림</Link>
-				<Link className="primary-nav__item" to="login">로그인</Link>
-				<Link className="primary-nav__item" to="join">회원가입</Link>
+				<Link className="primary-nav__item" to="/control">관제시스템</Link>
+				<Link className="primary-nav__item" to="/construct">현장정보입력</Link>
+				{/*<Link className="primary-nav__item" to="push">푸쉬알림</Link>*/}
+				
+				<Link className="primary-nav__item" to="/login">로그인</Link>
+				<Link className="primary-nav__item" to="/join">회원가입</Link>
 			</nav>
 			<SubNav/>
 			<div className="page-body">
@@ -65,7 +66,7 @@ class SubNav extends React.Component {
 			var uri = url.substring(url.lastIndexOf('/'));
 	
 			var result = 'none';
-			if('/' != uri){
+			if('/' !== uri || uri.indexOf( '/detail' ) !== -1){
 				result = 'block';
 			}
 			

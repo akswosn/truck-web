@@ -10,7 +10,7 @@ class Main extends Component {
 		this.user.id = '';
 		this.user.name = '';
 		this.user.password = '';
-
+		this.state.addr = '';
 
 		this.getLogin = this.getLogin.bind(this);
 		this.getLogin();
@@ -37,7 +37,7 @@ class Main extends Component {
 							<div className="input-group">
 							<label className="form-label" htmlFor="search"></label>
 								<div className="input-group-control input-group-field">
-									<input id="search" type="text" className="form-input" placeholder="경기도 안산시 선부동" />
+									<input id="search" type="text" className="form-input" placeholder="경기도 안산시 선부동" value={this.state.addr}/>
 								</div>
 								<div className="input-group-control input-group-btn">
 									<button className="btn btn-primary" type="button">검색</button>

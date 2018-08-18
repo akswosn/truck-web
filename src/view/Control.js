@@ -4,10 +4,10 @@ import '../styles/app.css';
 import $ from "jquery"
 import Select from 'react-select';
 import {
-	Map as NaverMap,
-	loadNavermapsScript,
+	
+	loadNavermapsScript
   } from 'react-naver-maps'
- import Loadable from 'react-loadable'
+
 
  const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
 
@@ -21,7 +21,7 @@ class Control extends Component {
 		this.user.name = '';
 		this.user.password = '';
 		this.state.map = false;
-		this.state.zoom = 10;
+		this.state.zoom = 7;
 		this.state.markers = [];
 		this.state.circle = [];
 		this.state.infoWindow = [];
@@ -51,13 +51,13 @@ class Control extends Component {
 		});
 	}
 	mapZoomIn(){
-		this.state.zoom++;
+		this.state.zoom ++;
 		this.state.map.setOptions({
 			zoom : this.state.zoom 
 		});
 	}
 	mapRefresh(){
-		this.state.zoom = 10
+		this.state.zoom = 7;
 		this.mapInit(this.state.lat, this.state.lon, this.state.zoom);
 	}
 	mapInit(lat, lon, zoom){
@@ -98,6 +98,9 @@ class Control extends Component {
 			this.state.circle[i].setMap(null);
 		}
 		this.state.circle = [];
+
+		
+		this.state.infoWindow = [];
 		//clear end
 
 		console.log('id', id);
@@ -118,7 +121,7 @@ class Control extends Component {
 				});
 				var infoWindow = new this.navermaps.InfoWindow({
 					content: '<div style="width:400px;text-align:center;padding:10px;">'
-						+ '<b>'+this.state.form_markers[i].name +'(출발지)</b><hr/>'
+						+ '<b><a target="_blank" href="/detail/'+this.state.to_markers[i].id+'">'+this.state.form_markers[i].name +'(출발지)</a></b><hr/>'
 						+ '주소 : '+ this.state.form_markers[i].addr
 						+ '</div>'
 				});
@@ -160,7 +163,16 @@ class Control extends Component {
 		for (var i=0, ii= this.state.markers.length; i<ii; i++) {
 			this.navermaps.Event.addListener(this.state.markers[i], 'click', this.getClickHandler(i));
 		}
-		
+		this.navermaps.Event.addListener(this.state.map, 'click', this.allWindowClear());
+	}
+	allWindowClear (){
+		console.log('allWindowClear');
+		for(var i in this.state.infoWindow){
+			var	infoWindow = this.state.infoWindow[i];
+			if (infoWindow.getMap()) {
+				infoWindow.close();
+			}
+		}
 	}
 
 	getClickHandler(seq) {
@@ -181,20 +193,35 @@ class Control extends Component {
 		//var HOME_PATH = window.HOME_PATH || '.';
 		var self = this;
 		//현재 위치 후 맵 오픈
-		navigator.geolocation.getCurrentPosition(function(pos){
-			self.state.lat = pos.coords.latitude;
-			self.state.lon = pos.coords.longitude;
+		if(self.state.lat === '' || self.state.lon ===''){
+
+			navigator.geolocation.getCurrentPosition(function(pos){
+				self.state.lat = pos.coords.latitude;
+				self.state.lon = pos.coords.longitude;
+				loadNavermapsScript({clientId:CLIENT_ID})
+					.then((navermaps)=>{
+						self.navermaps=navermaps;
+						self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
+				
+						// var marker = new navermaps.Marker({
+						//     position:new navermaps.LatLng(37.4544266, 127.1309902),
+						//     map : map
+						// })
+					})
+			});
+		}
+		else {
 			loadNavermapsScript({clientId:CLIENT_ID})
-				.then((navermaps)=>{
-					self.navermaps=navermaps;
-					self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
-			
-					// var marker = new navermaps.Marker({
-					//     position:new navermaps.LatLng(37.4544266, 127.1309902),
-					//     map : map
-					// })
-				})
-		});
+					.then((navermaps)=>{
+						self.navermaps=navermaps;
+						self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
+				
+						// var marker = new navermaps.Marker({
+						//     position:new navermaps.LatLng(37.4544266, 127.1309902),
+						//     map : map
+						// })
+					})
+		}
 		
 	}
 	initConssite(){
@@ -215,7 +242,7 @@ class Control extends Component {
 			// 	value : 0,
 			// 	label : '전체'
 			// });
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				var options = [];
 				for(var i in res.data){
 					var obj = {
@@ -229,6 +256,7 @@ class Control extends Component {
 				
 				//this.state.lat = res.data[0].lat;
 				//this.state.lon = res.data[0].lon;
+				
 				this.state.conssite = res.data;
 				this.state.form_markers = res.data;
 				this.state.to_markers = res.data;
@@ -243,7 +271,7 @@ class Control extends Component {
 	}
 
 	getLogin(){
-		if(sessionStorage.length == 0 ){
+		if(sessionStorage.length === 0 ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
 			return;

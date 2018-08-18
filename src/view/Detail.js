@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
+import '../styles/truckweb.css';
 import $ from "jquery"
 
 
@@ -47,7 +48,7 @@ class Detail extends Component {
         var self = this;
 		$.ajax({
 			type: 'POST',
-			url: 'http://52.79.177.67:5051/api/consite/detail',
+			url: 'http://localhost:5051/api/consite/detail',
 			data: {id : this.state.id},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -80,25 +81,26 @@ class Detail extends Component {
 
 			<div className="page-container">
                 <div className="page-detail">
-				    <h3>{this.state.name}</h3>
+				    <h3 className="title">{this.state.name}</h3>
                     <div className="info">
-                        <h4>기본정보</h4>
+                        <h4 className="title">기본정보</h4>
                         <hr/>
-                        <ul>
-                            <li>현장주소 : {this.state.addr}</li>
-                            <li>목적지주소 : {this.state.to_addr}</li>
-                            <li>연락처 : {this.state.contact}</li>
-                            <li>토석수량 : {this.state.quantity}</li>
-                            <li>필요수량 : {this.state.need_fee}</li>
-                            <li>운반료 :  {this.state.fee}원</li>
+                        <ul className="info-list">
+                            <li><span>현장주소</span> : {this.state.addr}</li>
+                            <li><span>목적지주소</span> : {this.state.to_addr}</li>
+                            <li><span>연락처</span> : {this.state.contact}</li>
+                            <li><span>토석수량</span> : {this.state.quantity}개</li>
+                            <li><span>필요수량</span> : {this.state.need_quantity}개</li>
+                            <li><span>운반료</span> :  {this.state.fee}원</li>
                         </ul>
-                         
-                         
                     </div>
 
                     <div className="info-sub">
-                        <h4>배차신청현황</h4>
+                        <h4 className="title">배차신청현황</h4>
                         <hr/>
+						<ul className="info-list">
+
+						</ul>
                     </div>
                 </div>
 			</div>

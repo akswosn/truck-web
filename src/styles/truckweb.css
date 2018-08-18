@@ -1,0 +1,32 @@
+.page-detail {
+    text-align: left;
+}
+
+ .info .title, .info-sub .title{
+    text-align: left;
+    color: darkgray;
+}
+
+.info hr, .info-sub hr{
+    margin: 0px;
+    padding: 0px;
+    border: 0;
+    height: 2px;
+    background-color: lightgray;
+}
+
+.info-list{
+    list-style-type: none;
+    margin-top : 10px;
+    padding: 0;
+}
+.info-list li {
+    margin: 5px 20px;  
+}
+.info-list li span{
+    font-weight: bold;
+}
+
+.info-sub{
+    margin-top : 30px;
+}

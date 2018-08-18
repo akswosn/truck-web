@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
-import Map from '../component/Map'
+
 
 class Search extends Component {
 	constructor(props) {
@@ -60,7 +60,7 @@ class Search extends Component {
 					</span>
 				</div>
 				<div>
-					<Map/>
+					
 				</div>
 			
 			</div>

@@ -61,7 +61,7 @@ class Join extends Component {
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
 		}).done((res) => {
-			if(res.data != null && res.data != undefined){
+			if(res.data !== null && res.data !== undefined){
 				alert('회원가입 되셨습니다.');
 				window.location.href = '/login';
 			}
