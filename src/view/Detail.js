@@ -33,7 +33,7 @@ class Detail extends Component {
 	}
 	getLogin(){
 		console.log(sessionStorage)
-		if(sessionStorage.length == 0 ){
+		if(sessionStorage.length === 0 ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
 			return;
@@ -42,7 +42,7 @@ class Detail extends Component {
 		var id = sessionStorage.getItem("id");
 		var name = sessionStorage.getItem("name");
 		console.log(name);
-		if(id == null || name == null ){
+		if(id === null || name === null ){
 			alert('로그인후 이용해주세요');
 			window.location.href = '/login';
 			return;
@@ -90,7 +90,7 @@ class Detail extends Component {
 			async : false                
 		}).done((res) => {
             console.log(res);
-            if(res.data != null && res.data.length !== 0){
+            if(res.data !== null && res.data.length !== 0){
                // self.setState(res.data[0]);
                for(var i in res.data[0]){
                    //console.log(i);
@@ -111,7 +111,7 @@ class Detail extends Component {
 	setRaceCallState(obj){
 		console.log(obj);
 		var self = this;
-		if(obj.state == 1){//배차신청
+		if(obj.state === 1){//배차신청
 			obj.state =2;
 		} else {//배차취소
 			obj.state =1;
@@ -150,19 +150,19 @@ class Detail extends Component {
 
 		for(var i = 0; i < this.state.raceCalls.length;i++){
 			var obj = this.state.raceCalls[i];
-			if(obj.state == 0){
+			if(obj.state === 0){
 				result.push(<li>[대기] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
-			else if(obj.state == 1){
+			else if(obj.state === 1){
 				result.push(<li>[덤프등록] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-success">배차등록</button></li>);
 			}
-			else if(obj.state == 2){
+			else if(obj.state === 2){
 				result.push(<li>[배차] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-danger">배차취소</button></li>);
 			}
 			else if(obj.state == 3){
 				result.push(<li>[운행중] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
-			else if(obj.state == 4){
+			else if(obj.state === 4){
 				result.push(<li>[운행종료] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
 			

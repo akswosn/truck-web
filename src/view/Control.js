@@ -13,6 +13,8 @@ import {
 
 class Control extends Component {
 	constructor(props) {
+
+
 		super(props);
 		this.state = {isToggleOn: true};
 
@@ -31,8 +33,19 @@ class Control extends Component {
 		this.state.conssite = [];
 		this.state.form_markers = [];
 		this.state.to_markers = [];
-		this.state.lat = '';
-		this.state.lon = '';
+
+		var args = props.match.params;
+		console.log(args);
+		
+		this.state.lat = args.lat ;
+		this.state.lon = args.lon ;
+		if(this.state.lat === undefined){
+			this.state.lat  = '';
+		}
+		if(this.state.lon === undefined){
+			this.state.lon  = '';
+		}
+		
 			
 		this.getLogin = this.getLogin.bind(this);
 		this.initConssite = this.initConssite.bind(this);
@@ -119,6 +132,7 @@ class Control extends Component {
 					fillColor: 'blue',
 					fillOpacity: 0.3
 				});
+				console.log(this.state.form_markers[i]);
 				var infoWindow = new this.navermaps.InfoWindow({
 					content: '<div style="width:400px;text-align:center;padding:10px;">'
 						+ '<b><a target="_blank" href="/detail/'+this.state.to_markers[i].id+'">'+this.state.form_markers[i].name +'(출발지)</a></b><hr/>'
@@ -193,6 +207,7 @@ class Control extends Component {
 		//var HOME_PATH = window.HOME_PATH || '.';
 		var self = this;
 		//현재 위치 후 맵 오픈
+		console.log(self.state.lat);
 		if(self.state.lat === '' || self.state.lon ===''){
 
 			navigator.geolocation.getCurrentPosition(function(pos){

@@ -36,3 +36,18 @@
 .info-sub{
     margin-top : 30px;
 }
+.viewSearch {
+    width:220px;
+    position: absolute;
+    background-color: white;
+    text-align: left;
+    color : darkgray;
+    font-size: 14px;
+}
+.viewSearch hr{
+    margin: 0px;
+    padding: 0px;
+    border: 0;
+    height: 1px;
+    background-color: lightgray;
+}

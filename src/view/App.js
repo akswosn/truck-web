@@ -33,12 +33,13 @@ const PageNav = () => (
 			<SubNav/>
 			<div className="page-body">
 					<Route exact path="/" component={Main} />
+					
 					<Route path="/control" component={Control} />
 					<Route path="/construct" component={Construct} />
 					<Route path="/push" component={Push} />
 					<Route path="/login" component={Login} />
 					<Route path="/join" component={Join} />
-					<Route path="/search/:lat/:lon" component={Search} />
+					<Route path="/search/:lat/:lon" component={Control} />
 					<Route path="/detail/:id" component={Detail} />
 			</div>
 		</div>
