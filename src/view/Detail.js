@@ -91,7 +91,11 @@ class Detail extends Component {
 		}).done((res) => {
             console.log(res);
             if(res.data !== null && res.data.length !== 0){
-               // self.setState(res.data[0]);
+			   self.setState(res.data[0]);
+			   if(res.data[0].company !== self.user.id){
+					alert('권한이 없습니다.');
+					window.history.back();
+			   }
                for(var i in res.data[0]){
                    //console.log(i);
                    //['this.state.'+i] = res.data[0].i;

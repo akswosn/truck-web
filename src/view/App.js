@@ -39,7 +39,7 @@ const PageNav = () => (
 					<Route path="/push" component={Push} />
 					<Route path="/login" component={Login} />
 					<Route path="/join" component={Join} />
-					<Route path="/search/:lat/:lon" component={Control} />
+					<Route path="/search/:lat/:lon" component={Search} />
 					<Route path="/detail/:id" component={Detail} />
 			</div>
 		</div>
@@ -57,8 +57,12 @@ class SubNav extends React.Component {
 				'/control':'관제시스템',
 				
 			};
+			
 			var url = window.location.href;
 			var uri = url.substring(url.lastIndexOf('/'));
+			if(uri.indexOf('search')){
+				return '현장정보 검색';
+			}
 			return title[uri];
 		}
 		getdisPlay(){
