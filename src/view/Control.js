@@ -208,8 +208,8 @@ class Control extends Component {
 
 			setTimeout(function(){
 				if(self.state.lat === '' || self.state.lon ===''){
-					self.state.lat = 37.335887;
-					self.state.lon = 126.584063;
+					self.state.lat = 37.566535;
+					self.state.lon = 126.97796919999996;
 					loadNavermapsScript({clientId:CLIENT_ID})
 					.then((navermaps)=>{
 						self.navermaps=navermaps;
