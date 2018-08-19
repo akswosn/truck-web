@@ -110,26 +110,37 @@ class Detail extends Component {
 	}
 	setRaceCallState(obj){
 		console.log(obj);
-		// var self = this;
-		// $.ajax({
-		// 	type: 'POST',
-		// 	url: 'http://localhost:5051/api/consite/detail',
-		// 	data: {id : this.state.id},
-		// 	headers: {
-		// 		'Access-Control-Allow-Origin': '*',
-		// 		user : JSON.stringify(this.user)
-		// 	},
-		// 	async : false                
-		// }).done((res) => {
-        //     console.log(res);
+		var self = this;
+		if(obj.state == 1){//배차신청
+			obj.state =2;
+		} else {//배차취소
+			obj.state =1;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:5051/api/race/update',
+			data: {id : obj.id, state: obj.state},
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				user : JSON.stringify(this.user)
+			},
+			async : false                
+		}).done((res) => {
+			
+			console.log(res);
+			if(res.status === 'success'){
+				alert('변경되었습니다.');
+				this.getRaceCalls();
+			}
+            //this.getRaceCalls()
             
-            
-		// }).fail((res) => {
-		// 	console.log(res);
-		// 	console.log(res.responseJSON);
-		// 	alert(res.responseJSON.error);
-		// });
-		alert('배차설정 Action')
+		}).fail((res) => {
+			console.log(res);
+			console.log(res.responseJSON);
+			alert(res.responseJSON.error);
+		});
+		//alert('배차설정 Action')
 	}
 
 	randerRaceCalls =() =>{

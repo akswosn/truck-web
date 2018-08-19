@@ -207,7 +207,7 @@ class Control extends Component {
 			});
 
 			setTimeout(function(){
-				if(self.state.lat === '' || self.state.lon ===''){
+				if(self.state.lat === '' || self.state.lon ===''){//현재 자표 못구할시 서울시청으로
 					self.state.lat = 37.566535;
 					self.state.lon = 126.97796919999996;
 					loadNavermapsScript({clientId:CLIENT_ID})
