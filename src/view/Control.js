@@ -270,7 +270,7 @@ class Control extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			alert(res.responseJSON.error);
+			//alert(res.responseJSON.error);
 		}); 
 	}
 
