@@ -21,10 +21,16 @@
     padding: 0;
 }
 .info-list li {
+    font-size: 16px;
     margin: 5px 20px;  
+    line-height: 36px;
+    vertical-align: middle;
 }
 .info-list li span{
     font-weight: bold;
+}
+.info-list li button{
+    float : right
 }
 
 .info-sub{

@@ -38,7 +38,7 @@ const PageNav = () => (
 					<Route path="/push" component={Push} />
 					<Route path="/login" component={Login} />
 					<Route path="/join" component={Join} />
-					<Route path="/search" component={Search} />
+					<Route path="/search/:lat/:lon" component={Search} />
 					<Route path="/detail/:id" component={Detail} />
 			</div>
 		</div>

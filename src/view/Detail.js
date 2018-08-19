@@ -4,10 +4,16 @@ import '../styles/truckweb.css';
 import $ from "jquery"
 
 
+
+
 class Detail extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {isToggleOn: true, id:props.match.params.id};
+		this.state = {
+			isToggleOn: true,
+			id:props.match.params.id,
+			raceCalls : []
+		};
         
         
 		this.user = {};
@@ -16,12 +22,14 @@ class Detail extends Component {
 		this.user.password = '';
 
         this.getLogin = this.getLogin.bind(this);
-        this.getDetail = this.getDetail.bind(this);
-        console.log(props.match.params);
+		this.getDetail = this.getDetail.bind(this);
+		this.getRaceCalls = this.getRaceCalls.bind(this);
+		//this.randerRaceCalls = this.randerRaceCalls.bind(this);
+        this.setRaceCallState = this.setRaceCallState.bind(this);
         
         this.getLogin();
         this.getDetail();
-		
+		this.getRaceCalls();
 	}
 	getLogin(){
 		console.log(sessionStorage)
@@ -42,9 +50,34 @@ class Detail extends Component {
 		this.user.id = id;
 		this.user.name = name;
 		this.user.password = sessionStorage.getItem("password");
-    }
+	}
+	getRaceCalls(){
+		console.log(this.state.id);
+		var self = this;
+		$.ajax({
+			type: 'get',
+			url: 'http://localhost:5051/api/race/site/'+this.state.id,
+			
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				user : JSON.stringify(this.user)
+			},
+			async : false                
+		}).done((res) => {
+			console.log(res);
+			
+			if(res.data !== null){
+				self.state.raceCalls = res.data;
+			}
+            console.log(self.state.viewRaceCalls);
+		}).fail((res) => {
+			console.log(res);
+			console.log(res.responseJSON);
+			alert(res.responseJSON.error);
+		});
+	}
     getDetail(){
-        console.log(this.state);
+       
         var self = this;
 		$.ajax({
 			type: 'POST',
@@ -60,7 +93,7 @@ class Detail extends Component {
             if(res.data != null && res.data.length !== 0){
                // self.setState(res.data[0]);
                for(var i in res.data[0]){
-                   console.log(i);
+                   //console.log(i);
                    //['this.state.'+i] = res.data[0].i;
                    this.state[i] = res.data[0][i];
                }
@@ -74,6 +107,56 @@ class Detail extends Component {
 			console.log(res.responseJSON);
 			alert(res.responseJSON.error);
 		});
+	}
+	setRaceCallState(obj){
+		console.log(obj);
+		// var self = this;
+		// $.ajax({
+		// 	type: 'POST',
+		// 	url: 'http://localhost:5051/api/consite/detail',
+		// 	data: {id : this.state.id},
+		// 	headers: {
+		// 		'Access-Control-Allow-Origin': '*',
+		// 		user : JSON.stringify(this.user)
+		// 	},
+		// 	async : false                
+		// }).done((res) => {
+        //     console.log(res);
+            
+            
+		// }).fail((res) => {
+		// 	console.log(res);
+		// 	console.log(res.responseJSON);
+		// 	alert(res.responseJSON.error);
+		// });
+		alert('배차설정 Action')
+	}
+
+	randerRaceCalls =() =>{
+		var  result = [];
+
+		for(var i = 0; i < this.state.raceCalls.length;i++){
+			var obj = this.state.raceCalls[i];
+			if(obj.state == 0){
+				result.push(<li>[대기] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+			}
+			else if(obj.state == 1){
+				result.push(<li>[덤프등록] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-success">배차등록</button></li>);
+			}
+			else if(obj.state == 2){
+				result.push(<li>[배차] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-danger">배차취소</button></li>);
+			}
+			else if(obj.state == 3){
+				result.push(<li>[운행중] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+			}
+			else if(obj.state == 4){
+				result.push(<li>[운행종료] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+			}
+			
+		}
+
+		
+		return result;
 	}
 	render () {
 		
@@ -99,7 +182,7 @@ class Detail extends Component {
                         <h4 className="title">배차신청현황</h4>
                         <hr/>
 						<ul className="info-list">
-
+							{this.randerRaceCalls()}
 						</ul>
                     </div>
                 </div>

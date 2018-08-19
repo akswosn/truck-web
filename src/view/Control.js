@@ -203,23 +203,27 @@ class Control extends Component {
 						self.navermaps=navermaps;
 						self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
 				
-						// var marker = new navermaps.Marker({
-						//     position:new navermaps.LatLng(37.4544266, 127.1309902),
-						//     map : map
-						// })
 					})
 			});
+
+			setTimeout(function(){
+				if(self.state.lat === '' || self.state.lon ===''){
+					self.state.lat = 37.335887;
+					self.state.lon = 126.584063;
+					loadNavermapsScript({clientId:CLIENT_ID})
+					.then((navermaps)=>{
+						self.navermaps=navermaps;
+						self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
+				
+					})
+				}
+			}, 2000)
 		}
 		else {
 			loadNavermapsScript({clientId:CLIENT_ID})
 					.then((navermaps)=>{
 						self.navermaps=navermaps;
 						self.mapInit(self.state.lat, self.state.lon, self.state.zoom);
-				
-						// var marker = new navermaps.Marker({
-						//     position:new navermaps.LatLng(37.4544266, 127.1309902),
-						//     map : map
-						// })
 					})
 		}
 		
