@@ -60,7 +60,7 @@ class SubNav extends React.Component {
 			
 			var url = window.location.href;
 			var uri = url.substring(url.lastIndexOf('/'));
-			if(uri.indexOf('search')){
+			if(uri.indexOf('search') > -1){
 				return '현장정보 검색';
 			}
 			return title[uri];
