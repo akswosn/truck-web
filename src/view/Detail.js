@@ -131,7 +131,9 @@ class Detail extends Component {
 			console.log(res);
 			if(res.status === 'success'){
 				alert('변경되었습니다.');
-				this.getRaceCalls();
+				//self.getRaceCalls();
+				//self.randerRaceCalls();
+				window.location.reload();	
 			}
             //this.getRaceCalls()
             
