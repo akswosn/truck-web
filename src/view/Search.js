@@ -360,7 +360,7 @@ class Search extends Component {
 						</ul>
 					</div>
 					<div style={{clear:'both'}}></div>
-					<div className="search">
+					<div className="search">{/*
 						<label>
 							
 							<input
@@ -396,7 +396,7 @@ class Search extends Component {
 								checked={this.state.sitetype[4]}
 								onChange={this.handleInputChange}  
 								/> 사토장
-						</label>
+						</label>*/}
 					</div>
 					
 					<div>
