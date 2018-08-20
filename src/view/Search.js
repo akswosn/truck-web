@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
-
+import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';
 import {
@@ -28,6 +28,13 @@ class Search extends Component {
 		this.state.circle = [];
 		this.state.infoWindow = [];
 		this.state.conssiteVal = 0;
+		this.state.sitetype = [
+			'',
+			true,
+			true,
+			true,
+			true,
+		];
 		
 		this.state.options = [];
 		this.state.conssite = [];
@@ -54,6 +61,7 @@ class Search extends Component {
 		this.mapRefresh = this.mapRefresh.bind(this);
 		this.mapCenterMove = this.mapCenterMove.bind(this);
 		this.handleChangeSelect = this.handleChangeSelect.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 		this.getLogin();
 		this.initConssite();
 
@@ -115,11 +123,13 @@ class Search extends Component {
 		
 		this.state.infoWindow = [];
 		//clear end
-
-		console.log('id', id);
+		var bgColorCir = ['','lightskyblue','lightgreen','lightcoral','darkkhaki'];
+		console.log(this.state.sitetype);
 		for(var i in this.state.form_markers){
-			if(id === 0 || id === this.state.form_markers[i].id){
-
+			var stype =this.state.form_markers[i].site_type;
+			
+			if(this.state.sitetype[stype] === true){
+				
 				var marker = new this.navermaps.Marker({
 					position:new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
 					map : this.state.map
@@ -129,13 +139,14 @@ class Search extends Component {
 					map: this.state.map,
 					center: new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
 					radius: 500,
-					fillColor: 'blue',
-					fillOpacity: 0.3
+					fillColor: bgColorCir[stype],
+					strokeColor : bgColorCir[stype],
+					fillOpacity: 0.5
 				});
-				console.log(this.state.form_markers[i]);
+				//console.log(this.state.form_markers[i]);
 				var infoWindow = new this.navermaps.InfoWindow({
 					content: '<div style="width:400px;text-align:center;padding:10px;">'
-						+ '<b>'+this.state.form_markers[i].name +'(출발지)</b><hr/>'
+						+ '<b>'+this.state.form_markers[i].name +'('+this.state.form_markers[i].display_type+')</b><hr/>'
 						+ '주소 : '+ this.state.form_markers[i].addr
 						+ '</div>'
 				});
@@ -145,6 +156,7 @@ class Search extends Component {
 				this.state.infoWindow.push(infoWindow);
 			}
 		}
+		/*
 		for(var i in this.state.to_markers){
 			if(id === 0 || id === this.state.to_markers[i].id){
 				var marker = new this.navermaps.Marker({
@@ -173,20 +185,20 @@ class Search extends Component {
 		}
 		console.log(this.state.markers);
 		console.log(this.state.infoWindow);
-
+		*/
 		for (var i=0, ii= this.state.markers.length; i<ii; i++) {
 			this.navermaps.Event.addListener(this.state.markers[i], 'click', this.getClickHandler(i));
 		}
 		this.navermaps.Event.addListener(this.state.map, 'click', this.allWindowClear());
 	}
 	allWindowClear (){
-		console.log('allWindowClear');
+		/*
 		for(var i in this.state.infoWindow){
 			var	infoWindow = this.state.infoWindow[i];
 			if (infoWindow.getMap()) {
 				infoWindow.close();
 			}
-		}
+		}*/
 	}
 
 	getClickHandler(seq) {
@@ -280,6 +292,30 @@ class Search extends Component {
 			//alert(res.responseJSON.error);
 		}); 
 	}
+	handleInputChange(event){
+		const target = event.target;
+    	const value = $(target).is(':checked') === true ? true : true;
+		const name = target.name;
+		var obj = [];
+		console.log($(target).is(':checked') );
+		// for(var i in this.state.sitetype){
+			
+		// 	if(i === name){
+		// 		obj[i] = value;
+		// 	}
+		// 	else {
+		// 		obj[i] = this.state.sitetype[i];
+		// 	}
+		// }
+		
+		// this.setState({
+		// 	sitetype : obj
+		// });
+		this.state.sitetype[name] = value;
+		console.log(this.state.sitetype);
+		this.setMarkers(0);
+		return this.state.sitetype[name] ;
+	}
 
 	getLogin(){
 		if(sessionStorage.length === 0 ){
@@ -312,12 +348,61 @@ class Search extends Component {
 		// }
 		return (
 			<div className="page-container">
-				
-				
-				<div>
-					<div id="map" style={{width:'100%',height:'500px'}}></div>
+				<div className="search-wrap">
+					<div className="title">
+						<h2>현장정보 검색</h2>
+						<ul className="info-list">
+							<li> 순성토 </li>
+							<li> 사토</li>
+							<li> 토취장</li>
+							<li> 사토장</li>
+							
+						</ul>
+					</div>
+					<div style={{clear:'both'}}></div>
+					<div className="search">
+						<label>
+							
+							<input
+								name="1"
+								type="checkbox"
+								checked={this.state.sitetype[1]}
+								onChange={this.handleInputChange}  
+								/> 순성토
+						</label>
+						<label>
+							
+							<input
+								name="2"
+								type="checkbox"
+								checked={this.state.sitetype[2]}
+								onChange={this.handleInputChange}  
+								/> 사토
+						</label>
+						<label>
+							
+							<input
+								name="3"
+								type="checkbox"
+								checked={this.state.sitetype[3]}
+								onChange={this.handleInputChange}  
+								/> 토취장
+						</label>
+						<label>
+							
+							<input
+								name="4"
+								type="checkbox"
+								checked={this.state.sitetype[4]}
+								onChange={this.handleInputChange}  
+								/> 사토장
+						</label>
+					</div>
+					
+					<div>
+						<div id="map" style={{width:'100%',height:'500px'}}></div>
+					</div>
 				</div>
-			
 			</div>
 		);
 	}
