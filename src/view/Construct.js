@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
+import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';
 import Modal from 'react-modal';
@@ -42,12 +43,12 @@ class Construct extends Component {
 		this.state.addr = '검색';
 		this.state.lat = '';
 		this.state.lon = '';
-		this.state.quantity = 0;
-		this.state.fee = 0;
+		this.state.quantity = '';
+		this.state.fee = '';
 		this.state.to_addr = '검색';
 		this.state.to_lat = '';
 		this.state.to_lon = '';
-		this.state.need_quantity = 0;
+		this.state.need_quantity = '';
 		this.state.truck_type = '';
 		this.state.soil_type = '';
 		this.state.site_type = '';

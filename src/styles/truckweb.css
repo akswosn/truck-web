@@ -27,7 +27,8 @@
     vertical-align: middle;
 }
 .info-list li span{
-    font-weight: bold;
+    font-weight: bold;color:white;background-color: darkgray;
+    display: inline-block;width:120px;text-align: right;padding-right: 20px;
 }
 .info-list li button{
     float : right
@@ -93,4 +94,214 @@
 .search-wrap  .search label{
     margin-right: 10px;
     
+}
+
+/*common*/
+body{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+.bg-lglay{
+    background-color: lightgray;
+}
+h2{
+    font-weight: bold;
+}
+
+th {
+    font-family: Lato-Bold;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.4;
+    background-color: lightseagreen;
+  }
+
+  td {
+    font-family: Lato-Regular;
+    font-size: 15px;
+    color: #808080;
+    line-height: 1.4;
+  }
+
+/* Main 페이지*/
+.main-content-seach{
+    list-style: none;
+    background-color:lightgray;
+    border: 1px solid lightgray;
+    margin: 20px 50px;
+    text-align: center;
+    padding: 5px;
+}
+
+.main-content-seach li{
+    margin: 10px 5px;
+    line-height: 30px;
+}
+
+.main-content-seach li.item-1{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.main-content-seach li.item-2{
+    font-size: 10px;
+    color:darkgray;
+}
+
+.main-content-seach li.item-3{
+    
+    margin: auto;
+    width:90%;
+    
+}
+
+.main-info {
+    margin: 15px;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+}
+.main-info img{
+    width : 80%;
+}
+/*회원가입*/
+.joinform-warpper{
+    margin: auto;
+    width:80%;
+    border: 1px solid lightgray;     
+    padding: 20px 10px;   
+}
+
+.joinform-warpper .form-group {
+    text-align: left;
+}
+
+.joinform-warpper .form-group label{
+    font-weight: bold;
+    font-size: 13px;
+}
+.joinform-warpper .form-group .form-input{
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid lightseagreen;
+    border-radius:0;-webkit-appearance:none
+}
+.joinform-warpper .form-group .form-input::placeholder{
+    font-size: 11px;
+    color:darkseagreen;
+}
+
+
+/*로그인*/
+.login-container {
+    margin: auto;
+    width:80%;
+    border: 1px solid lightgray;     
+    padding: 20px 10px; 
+    text-align: center;
+}
+
+.login-container h2{
+    text-align: left;
+}
+.login-container .form-group label{
+    font-weight: bold;
+    font-size: 13px;
+}
+.login-container  .form-group .form-input{
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid lightseagreen;
+    border-radius:0;-webkit-appearance:none
+}
+.login-container .form-group .form-input::placeholder{
+    font-size: 11px;
+    color:darkseagreen;
+}
+/*푸시알림*/
+.push-warpper{
+    text-align: left;
+}
+.push-warpper .top-area{
+   margin: 20px 5px;
+   height: 60px;
+}
+
+.push-warpper .top-area .item{
+    display: inline-block;
+    
+    height: 80px;
+    margin: 0px 35px 0px 0px;
+}
+.push-warpper .top-area .item:nth-child(1){
+    padding-top: 18px;
+    font-weight: bold;
+    font-size:18px;
+}
+.push-warpper .top-area .item:nth-child(2){
+    padding-top: 20px;
+}
+.push-warpper .top-area .item:nth-child(3){
+    padding-top: 10px;
+    vertical-align: bottom;
+}
+.push-warpper .top-area .item label{
+    font-weight: bold;
+    font-size: 13px;
+}
+.push-warpper .top-area .form-input{
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid lightseagreen;
+    border-radius:0;-webkit-appearance:none
+}
+.push-warpper .top-area .form-input::placeholder{
+    font-size: 14px;
+    color:darkseagreen;
+    font-weight: bold;
+}
+
+/* 현장정보 등록 */
+.constructWrap {
+    padding: 20px 10px; 
+}
+
+.constructWrap label{
+    color : white;
+    background-color: darkgray;
+}
+
+/*관제시스템*/
+.control-wrap {
+    text-align: left;
+}
+
+.control-wrap span{
+    display: inline-block;
+}
+.control-wrap span:nth-child(1){
+    font-weight: bold;
+    width:10%;
+}
+.control-wrap span:nth-child(2){
+
+    width:50%;
+}
+.control-wrap span div label{
+    font-weight: bold;
+    padding-right: 10px;
+    font-size:13px;
+}
+.control-wrap span select{
+    width:70%;
+    display: inline-block;
+}
+.control-wrap span button{
+    display: inline-block;
+}
+.control-wrap span:nth-child(3){
+    text-align: right;
+    width:30%;
+}
+.control-wrap span:nth-child(4){
+    text-align: right;
+    width:10%;
 }

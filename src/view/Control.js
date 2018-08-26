@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
-
+import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';
 import {
@@ -406,12 +406,13 @@ class Control extends Component {
 							
 						</Select>
 					</span>
+					{/*
 					<span>
 						<button className="btn btn-link" onClick={()=>this.mapZoomIn()}>+</button>
 					</span>
 					<span>
 						<button className="btn-xs btn-primary" onClick={()=>this.mapRefresh()}>새로고침</button>
-					</span>
+					</span>*/}
 				</div>
 				<div>
 					<div id="map" style={{width:'100%',height:'500px'}}></div>

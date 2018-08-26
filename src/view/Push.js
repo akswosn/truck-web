@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
-
+import '../styles/truckweb.css';
 
 
 class Push extends Component {

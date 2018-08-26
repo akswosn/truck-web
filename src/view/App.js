@@ -18,34 +18,35 @@ var divStyle = {
 	'paddingLeft':'10px',
 	'fontWeight':'bold'
 };
-const PageNav = () => (
-  <Router>
-		<div className="page-wrapper">
-			<nav className="primary-nav">
-				<Link to="/" className="logo" style={divStyle}>Truck Call</Link>
-				<Link className="primary-nav__item" to="/control">관제시스템</Link>
-				<Link className="primary-nav__item" to="/construct">현장정보입력</Link>
-				{/*<Link className="primary-nav__item" to="push">푸쉬알림</Link>*/}
+// const PageNav = (menuStyle) => (
+	
+//   <Router>
+// 		<div className="page-wrapper">
+// 			<nav className="primary-nav">
+// 				<Link to="/" className="logo" style={divStyle}>Truck Call</Link>
+// 				<Link className="primary-nav__item" to="/control">관제시스템</Link>
+// 				<Link className="primary-nav__item" to="/construct">현장정보입력</Link>
+// 				{/*<Link className="primary-nav__item" to="push">푸쉬알림</Link>*/}
 				
-				<Link className="primary-nav__item" to="/login">로그인</Link>
-				<Link className="primary-nav__item" to="/join">회원가입</Link>
-			</nav>
-			<SubNav/>
-			<div className="page-body">
-					<Route exact path="/" component={Main} />
+// 				<Link className="primary-nav__item" to="/login" style={menuStyle}>로그인</Link>
+// 				<Link className="primary-nav__item" to="/join" style={menuStyle}>회원가입</Link>
+// 			</nav>
+// 			<SubNav/>
+// 			<div className="page-body">
+// 					<Route exact path="/" component={Main} />
 					
-					<Route path="/control" component={Control} />
-					<Route path="/construct" component={Construct} />
-					<Route path="/push" component={Push} />
-					<Route path="/login" component={Login} />
-					<Route path="/join" component={Join} />
-					<Route path="/search/:lat/:lon" component={Search} />
-					<Route path="/detail/:id" component={Detail} />
-			</div>
-		</div>
-  </Router>
+// 					<Route path="/control" component={Control} />
+// 					<Route path="/construct" component={Construct} />
+// 					<Route path="/push" component={Push} />
+// 					<Route path="/login" component={Login} />
+// 					<Route path="/join" component={Join} />
+// 					<Route path="/search/:lat/:lon" component={Search} />
+// 					<Route path="/detail/:id" component={Detail} />
+// 			</div>
+// 		</div>
+//   </Router>
 
-);
+// );
 
 class SubNav extends React.Component {
 		getTitle(){
@@ -92,11 +93,71 @@ class SubNav extends React.Component {
 	 }
 
 class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			menuDisplay : {},
+			logoutDisplay : {}
+		}
+		
+		this.getMenuDisplay();
+		this.logout = this.logout.bind(this);
+	}
+	logout(){
+		sessionStorage.clear();
+		window.location.href = '/login';
+		return;
+	}
+	getMenuDisplay(){
+		
+		var id = sessionStorage.getItem("id");
+		var name = sessionStorage.getItem("name");
+		
+		if(id === null || name === null ){
+			this.state.menuDisplay.display = 'inline-block';
+			this.state.logoutDisplay.display = 'none';
+			
+		}
+		else {
+			
+			this.state.menuDisplay.display = 'none';
+			this.state.logoutDisplay.display ='inline-block';
+		}
+		console.log('data', this.state.menuDisplay);
+		return this.state.menuDisplay;
+	}
+
 	render() {
 		return (
 			<div>
 				
-					<PageNav />
+				<Router>
+					<div className="page-wrapper">
+						<nav className="primary-nav">
+							<Link to="/" className="logo" style={divStyle}>Truck Call</Link>
+							<Link className="primary-nav__item" to="/control">관제시스템</Link>
+							<Link className="primary-nav__item" to="/construct">현장정보입력</Link>
+							{/*<Link className="primary-nav__item" to="push">푸쉬알림</Link>*/}
+							
+							<Link className="primary-nav__item" to="/login" style={this.state.menuDisplay}>로그인</Link>
+							<Link className="primary-nav__item" to="/join" style={this.state.menuDisplay}>회원가입</Link>
+							<a className="primary-nav__item" href="javascript:void(0); return;"  style={this.state.logoutDisplay} onClick={this.logout}>로그아웃</a>
+							
+						</nav>
+						<SubNav/>
+						<div className="page-body">
+								<Route exact path="/" component={Main} />
+								
+								<Route path="/control" component={Control} />
+								<Route path="/construct" component={Construct} />
+								<Route path="/push" component={Push} />
+								<Route path="/login" component={Login} />
+								<Route path="/join" component={Join} />
+								<Route path="/search/:lat/:lon" component={Search} />
+								<Route path="/detail/:id" component={Detail} />
+						</div>
+					</div>
+			</Router>
 					
 					{/*<SubNav/>*/}
 					

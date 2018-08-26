@@ -153,19 +153,19 @@ class Detail extends Component {
 		for(var i = 0; i < this.state.raceCalls.length;i++){
 			var obj = this.state.raceCalls[i];
 			if(obj.state === 0){
-				result.push(<li>[대기] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+				result.push(<li><span style={{backgroundColor:'block'}}>[대기]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
 			else if(obj.state === 1){
-				result.push(<li>[덤프등록] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-success">배차등록</button></li>);
+				result.push(<li><span style={{backgroundColor:'#9aac03'}}>[덤프등록]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-success">배차등록</button></li>);
 			}
 			else if(obj.state === 2){
-				result.push(<li>[배차] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-danger">배차취소</button></li>);
+				result.push(<li><span style={{backgroundColor:'#0037ffbf'}}>[배차]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-danger">배차취소</button></li>);
 			}
 			else if(obj.state == 3){
-				result.push(<li>[운행중] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+				result.push(<li><span style={{backgroundColor:'#04ff00bf'}}>[운행중]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
 			else if(obj.state === 4){
-				result.push(<li>[운행종료] {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
+				result.push(<li><span style={{backgroundColor:'#ff9900'}}>[운행종료]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
 			
 		}
