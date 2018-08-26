@@ -7,7 +7,7 @@ import {
 	
 	loadNavermapsScript
   } from 'react-naver-maps'
-
+  import socketIOClient from 'socket.io-client'
 
  const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
 
@@ -16,7 +16,10 @@ class Control extends Component {
 
 
 		super(props);
-		this.state = {isToggleOn: true};
+		this.state = {
+			isToggleOn: true,
+			
+		};
 
 		this.user = {};
 		this.user.id = '';
@@ -33,9 +36,11 @@ class Control extends Component {
 		this.state.conssite = [];
 		this.state.form_markers = [];
 		this.state.to_markers = [];
+		this.state.current_truck = [];
+		this.state.current_truck_markers = [];
+		this.state.current_truck_circle = [];
 
 		var args = props.match.params;
-		console.log(args);
 		
 		this.state.lat = args.lat ;
 		this.state.lon = args.lon ;
@@ -56,7 +61,7 @@ class Control extends Component {
 		this.handleChangeSelect = this.handleChangeSelect.bind(this);
 		this.getLogin();
 		this.initConssite();
-
+		this.truckGPS();
 	}
 	mapCenterMove(lat, lon){
 		this.state.map.setOptions({
@@ -75,9 +80,9 @@ class Control extends Component {
 	}
 	mapInit(lat, lon, zoom){
 		this.setState({loaded:true});
-		console.log(lat);
-		console.log(lon);
-		console.log(zoom);
+		//console.log(lat);
+		//console.log(lon);
+		//console.log(zoom);
 		this.state.map  = new this.navermaps.Map('map',{
 			center : new this.navermaps.LatLng(lat, lon),
 			zoom : zoom
@@ -112,11 +117,11 @@ class Control extends Component {
 		}
 		this.state.circle = [];
 
-		
+		this.state.current_truck = [];
 		this.state.infoWindow = [];
 		//clear end
 
-		console.log('id', id);
+		
 		for(var i in this.state.form_markers){
 			if(id === 0 || id === this.state.form_markers[i].id){
 
@@ -124,6 +129,10 @@ class Control extends Component {
 					position:new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
 					map : this.state.map
 				})
+				// console.log(this.state.form_markers[i]);
+				if(this.state.form_markers[i].race_state === 2 && id > 0){
+					this.state.current_truck.push( this.state.form_markers[i]);
+				}
 	
 				var circle = new this.navermaps.Circle({
 					map: this.state.map,
@@ -132,7 +141,7 @@ class Control extends Component {
 					fillColor: 'blue',
 					fillOpacity: 0.3
 				});
-				console.log(this.state.form_markers[i]);
+				//console.log(this.state.form_markers[i]);
 				var infoWindow = new this.navermaps.InfoWindow({
 					content: '<div style="width:400px;text-align:center;padding:10px;">'
 						+ '<b><a target="_blank" href="/detail/'+this.state.to_markers[i].id+'">'+this.state.form_markers[i].name +'(출발지)</a></b><hr/>'
@@ -171,16 +180,81 @@ class Control extends Component {
 				this.state.infoWindow.push(infoWindow);
 			}
 		}
-		console.log(this.state.markers);
-		console.log(this.state.infoWindow);
+		//console.log(this.state.markers);
+		//console.log(this.state.infoWindow);
 
 		for (var i=0, ii= this.state.markers.length; i<ii; i++) {
 			this.navermaps.Event.addListener(this.state.markers[i], 'click', this.getClickHandler(i));
 		}
-		this.navermaps.Event.addListener(this.state.map, 'click', this.allWindowClear());
+		//this.navermaps.Event.addListener(this.state.map, 'click', this.allWindowClear());
+
+		//console.log('a',this.state.current_truck);
+		//add truck marker
+		if(this.state.current_truck.length > 0){
+			this.truckGPS();
+		}
 	}
+
+	truckGPS(){
+		var self = this;
+		
+		if(this.state.current_truck.length ===0){
+			return;
+		}
+		
+		var url = 'http://52.79.177.67:5051/';
+		// var url = 'http://localhost:5051/';
+		
+		//console.log(truck);
+		var socket = socketIOClient(url);
+		//const socket = socketIOClient(url+truck.race_id);
+		console.log(socket);
+		socket.on('connection', (socket) => {
+			console.log(socket.id);
+			
+		});
+		
+		socket.on('send:gps', (res) => {
+			console.log('send:gps',res);
+			self.randerTruckGPS(res);
+		});
+
+		for(var i in this.state.current_truck){
+			var id = this.state.current_truck[i].race_id;
+
+			socket.emit('connect:gps', {race_call:id}) ;
+	
+			//socket.emit('send:gps', {race_call:id, driver_idx: 5, lat: 37.4319703, lon: 127.1316331  }) ;		
+		}
+		
+	}
+	randerTruckGPS(data){
+		console.log(this.state.current_truck_circle[data.driver_idx] !== undefined);
+		if(this.state.current_truck_markers[data.driver_idx] !== undefined
+			|| this.state.current_truck_circle[data.driver_idx] !== undefined){
+			this.state.current_truck_markers[data.driver_idx].setMap(null);
+			this.state.current_truck_circle[data.driver_idx].setMap(null);
+		}
+		
+
+		var marker = new this.navermaps.Marker({
+			position:new this.navermaps.LatLng(data.lat, data.lon),
+			map : this.state.map
+		});
+		var circle = new this.navermaps.Circle({
+			map: this.state.map,
+			center: new this.navermaps.LatLng(data.lat, data.lon),
+			radius: 100,
+			fillColor: 'lightGray',
+			fillOpacity: 0.3
+		});
+
+		this.state.current_truck_markers[data.driver_idx] = marker;
+		this.state.current_truck_circle[data.driver_idx] = circle;
+	}
+
 	allWindowClear (){
-		console.log('allWindowClear');
+		//console.log('allWindowClear');
 		for(var i in this.state.infoWindow){
 			var	infoWindow = this.state.infoWindow[i];
 			if (infoWindow.getMap()) {
@@ -247,7 +321,7 @@ class Control extends Component {
 		var object = {}
 		$.ajax({
 			type: 'POST',
-			url: 'http://52.79.177.67:5051/api/consite/find',
+			url: 'http://localhost:5051/api/consite/find',
 			data: object,
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -279,7 +353,7 @@ class Control extends Component {
 				this.state.conssite = res.data;
 				this.state.form_markers = res.data;
 				this.state.to_markers = res.data;
-				console.log(this.state.options);
+				//console.log(this.state.options);
 			}
 			
 		}).fail((res) => {
