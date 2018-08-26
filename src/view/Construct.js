@@ -52,6 +52,7 @@ class Construct extends Component {
 		this.state.truck_type = '';
 		this.state.soil_type = '';
 		this.state.site_type = '';
+		this.state.contact = '';
 
 		this.user = {};
 		this.user.id = '';
@@ -342,7 +343,7 @@ class Construct extends Component {
 			fee : this.state.fee,
 			need_quantity : this.state.need_quantity,
 			truck_type : this.state.truck_type.value,
-			contact : sessionStorage.getItem('contactgit push')
+			contact : this.state.contact
 		}
 		console.log(object);
 		$.ajax({
@@ -464,6 +465,10 @@ class Construct extends Component {
 						<Select inputProps={{ id: 'truck_type' }} onChange={(e)=>this.handleChangeSelect('truck_type', e)} id="truck_type" options={this.truckTypeList} value={this.state.truck_type}>
 							
 						</Select>
+					</div>
+					<div className="form-group">
+						<label className="form-label" htmlFor="contact">연락처</label>
+						<input className="form-input" placeholder="연락처" id="contact" value={this.state.contact} onChange={e => this.handleChange(e)}/>
 					</div>
 					<div className="form-group">
 						<button  className="btn btn-primary" onClick={this.submitAction}>등록</button>
