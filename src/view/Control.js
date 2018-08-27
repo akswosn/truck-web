@@ -190,12 +190,14 @@ class Control extends Component {
 
 		//console.log('a',this.state.current_truck);
 		//add truck marker
+		console.log(this.state.current_truck.length);
 		if(this.state.current_truck.length > 0){
 			this.truckGPS();
 		}
 	}
 
 	truckGPS(){
+		console.log('call truckGPS');
 		var self = this;
 		
 		if(this.state.current_truck.length ===0){
