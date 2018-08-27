@@ -262,11 +262,16 @@ th {
 /* 현장정보 등록 */
 .constructWrap {
     padding: 20px 10px; 
+    text-align: left;
 }
 
 .constructWrap label{
     color : white;
     background-color: darkgray;
+    
+    display: table-cell;
+    padding: 5px;
+
 }
 
 /*관제시스템*/
@@ -279,7 +284,7 @@ th {
 }
 .control-wrap span:nth-child(1){
     font-weight: bold;
-    width:10%;
+    width:60px;
 }
 .control-wrap span:nth-child(2){
 

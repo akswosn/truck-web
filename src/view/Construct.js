@@ -470,7 +470,7 @@ class Construct extends Component {
 						<label className="form-label" htmlFor="contact">연락처</label>
 						<input className="form-input" placeholder="연락처" id="contact" value={this.state.contact} onChange={e => this.handleChange(e)}/>
 					</div>
-					<div className="form-group">
+					<div style={{textAlign:'right'}}>
 						<button  className="btn btn-primary" onClick={this.submitAction}>등록</button>
 					</div>
 				</div>

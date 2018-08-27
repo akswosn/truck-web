@@ -61,7 +61,7 @@ class Control extends Component {
 		this.handleChangeSelect = this.handleChangeSelect.bind(this);
 		this.getLogin();
 		this.initConssite();
-		this.truckGPS();
+		
 	}
 	mapCenterMove(lat, lon){
 		this.state.map.setOptions({
@@ -129,8 +129,10 @@ class Control extends Component {
 					position:new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
 					map : this.state.map
 				})
-				// console.log(this.state.form_markers[i]);
+				console.log('id',id);
+				console.log(this.state.form_markers[i]);
 				if(this.state.form_markers[i].race_state === 2 && id > 0){
+					console.log('truck push', this.state.form_markers[i]);
 					this.state.current_truck.push( this.state.form_markers[i]);
 				}
 	
@@ -190,7 +192,7 @@ class Control extends Component {
 
 		//console.log('a',this.state.current_truck);
 		//add truck marker
-		console.log(this.state.current_truck.length);
+		console.log(this.state.current_truck);
 		if(this.state.current_truck.length > 0){
 			this.truckGPS();
 		}
