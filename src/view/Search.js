@@ -259,7 +259,7 @@ class Search extends Component {
 		var object = {}
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost:5051/api/consite/all',
+			url: 'http://52.79.177.67:5051/api/consite/all',
 			data: object,
 			headers: {
 				'Access-Control-Allow-Origin': '*',

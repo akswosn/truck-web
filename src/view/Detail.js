@@ -56,7 +56,7 @@ class Detail extends Component {
 		var self = this;
 		$.ajax({
 			type: 'get',
-			url: 'http://localhost:5051/api/race/site/'+this.state.id,
+			url: 'http://52.79.177.67:5051/api/race/site/'+this.state.id,
 			
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -81,7 +81,7 @@ class Detail extends Component {
         var self = this;
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/consite/detail',
+			url: 'http://52.79.177.67:5051/api/consite/detail',
 			data: {id : this.state.id},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
@@ -121,7 +121,7 @@ class Detail extends Component {
 		
 		$.ajax({
 			type: 'POST',
-			url: 'http://localhost:5051/api/race/update',
+			url: 'http://52.79.177.67:5051/api/race/update',
 			data: {id : obj.id, state: obj.state},
 			headers: {
 				'Access-Control-Allow-Origin': '*',

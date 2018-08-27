@@ -103,7 +103,7 @@ class Join extends Component {
 		
 		// axios({
 		// 	method: 'post',
-		// 	url: 'http://localhost:5051/api/org_user/reg',
+		// 	url: 'http://52.79.177.67:5051/api/org_user/reg',
 		// 	params: JSON.stringify(object),
 		// 	mode: 'no-cors',
 		// 	headers:{
@@ -148,6 +148,10 @@ class Join extends Component {
 					<div className="form-group">
 						<label className="form-label" htmlFor="contact">연락처</label>
 						<input className="form-input" placeholder="연락처"  id="contact" value={this.state.contact} onChange={e => this.handleChange(e)}/>
+					</div>
+					<div className="form-group">
+						<label className="form-label" htmlFor="buz_number">사업자번호</label>
+						<input className="form-input" placeholder="사업자번호"  id="buz_number" value={this.state.buz_number} onChange={e => this.handleChange(e)}/>
 					</div>
 					<div className="form-group">
 						<label className="form-label" htmlFor="buz_number">사업자번호</label>

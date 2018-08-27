@@ -52,7 +52,7 @@ class Login extends Component {
 			alert(res.responseJSON.error);
 		});
 		
-		// fetch('http://localhost:5051/api/org_user/login', {
+		// fetch('http://52.79.177.67:5051/api/org_user/login', {
 		// 	credentials: 'same-origin'  ,
 		// 	method: 'post',
 		// 	body: JSON.stringify(object),
