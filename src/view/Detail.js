@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/app.css';
+//import '../styles/app.css';
 import '../styles/truckweb.css';
 import $ from "jquery"
 
@@ -73,7 +73,7 @@ class Detail extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			alert(res.responseJSON.error);
+			
 		});
 	}
     getDetail(){

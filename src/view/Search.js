@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/app.css';
+//import '../styles/app.css';
 import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';

@@ -1,3 +1,6 @@
+.page-body {
+    margin-top: 30px;
+}
 .page-detail {
     text-align: left;
 }
@@ -262,7 +265,7 @@ th {
 /* 현장정보 등록 */
 .constructWrap {
     padding: 20px 10px; 
-    text-align: left;
+    text-align: left; 
 }
 
 .constructWrap label{
