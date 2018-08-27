@@ -131,7 +131,7 @@ class Control extends Component {
 				})
 				console.log('id',id);
 				console.log(this.state.form_markers[i]);
-				if(this.state.form_markers[i].race_state === 2 && id > 0){
+				if(this.state.form_markers[i].race_state === 3 && id > 0){
 					console.log('truck push', this.state.form_markers[i]);
 					this.state.current_truck.push( this.state.form_markers[i]);
 				}
