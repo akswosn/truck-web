@@ -127,7 +127,9 @@ class Control extends Component {
 
 				var marker = new this.navermaps.Marker({
 					position:new this.navermaps.LatLng(this.state.form_markers[i].lat, this.state.form_markers[i].lon),
-					map : this.state.map
+					map : this.state.map,
+					
+					
 				})
 				console.log('id',id);
 				console.log(this.state.form_markers[i]);
@@ -160,7 +162,16 @@ class Control extends Component {
 			if(id === 0 || id === this.state.to_markers[i].id){
 				var marker = new this.navermaps.Marker({
 					position:new this.navermaps.LatLng(this.state.form_markers[i].to_lat, this.state.form_markers[i].to_lon),
-					map : this.state.map
+					map : this.state.map,
+					// icon:{
+					// 	url : '/images/main/truck.png',
+						
+					// 	size: new this.navermaps.Size(48, 48),
+					// 	scaledSize: new this.navermaps.Size(48, 48),
+					// 	origin: new this.navermaps.Point(0, 0),
+					// 	anchor: new this.navermaps.Point(12, 34)
+					// }
+						
 				});
 				var circle = new this.navermaps.Circle({
 					map: this.state.map,
@@ -243,7 +254,15 @@ class Control extends Component {
 
 		var marker = new this.navermaps.Marker({
 			position:new this.navermaps.LatLng(data.lat, data.lon),
-			map : this.state.map
+			map : this.state.map,
+			icon:{
+				url : '/images/main/truck.png',
+				
+				size: new this.navermaps.Size(48, 48),
+				scaledSize: new this.navermaps.Size(48, 48),
+				origin: new this.navermaps.Point(0, 0),
+				anchor: new this.navermaps.Point(12, 34)
+			}
 		});
 		var circle = new this.navermaps.Circle({
 			map: this.state.map,
