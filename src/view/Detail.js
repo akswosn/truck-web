@@ -25,7 +25,7 @@ class Detail extends Component {
 		this.getDetail = this.getDetail.bind(this);
 		this.getRaceCalls = this.getRaceCalls.bind(this);
 		//this.randerRaceCalls = this.randerRaceCalls.bind(this);
-        this.setRaceCallState = this.setRaceCallState.bind(this);
+       // this.setRaceCallState = this.setRaceCallState.bind(this);
         
         this.getLogin();
         this.getDetail();
@@ -107,6 +107,7 @@ class Detail extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
+			console.log(res.responseJSON);
 			if(res.responseJSON === null || res.responseJSON === undefined){
 				alert('서버에러 관리자에게 문의해주세요');
 			}
@@ -115,19 +116,20 @@ class Detail extends Component {
 			}
 		});
 	}
-	setRaceCallState(obj){
-		console.log(obj);
+	setRaceCallState(evt){
+		var id = $(evt.target).attr('data-id');
+		var state = $(evt.target).attr('data-state');
 		var self = this;
-		if(obj.state === 1){//배차신청
-			obj.state =2;
+		if(state === 1){//배차신청
+			state =2;
 		} else {//배차취소
-			obj.state =1;
+			state =1;
 		}
 		
 		$.ajax({
 			type: 'POST',
 			url: 'http://52.79.177.67:5051/api/race/update',
-			data: {id : obj.id, state: obj.state},
+			data: {id : id, state: state},
 			headers: {
 				'Access-Control-Allow-Origin': '*',
 				user : JSON.stringify(this.user)
@@ -147,17 +149,12 @@ class Detail extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			if(res.responseJSON === null || res.responseJSON === undefined){
-				alert('서버에러 관리자에게 문의해주세요');
-			}
-			else {
-				alert(res.responseJSON.error);
-			}
+			alert(res.responseJSON.error);
 		});
 		//alert('배차설정 Action')
 	}
 
-	randerRaceCalls =() =>{
+	randerRaceCalls(){
 		var  result = [];
 
 		for(var i = 0; i < this.state.raceCalls.length;i++){
@@ -166,10 +163,12 @@ class Detail extends Component {
 				result.push(<li><span style={{backgroundColor:'block'}}>[대기]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);
 			}
 			else if(obj.state === 1){
-				result.push(<li><span style={{backgroundColor:'#9aac03'}}>[덤프등록]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-success">배차등록</button></li>);
+				result.push(<li><span style={{backgroundColor:'#9aac03'}}>[덤프등록]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} 
+					<button data-id={obj.id} data-state={obj.state}  onClick={(evt) => this.setRaceCallState(evt)} className="btn btn-default-success">배차등록</button></li>);
 			}
 			else if(obj.state === 2){
-				result.push(<li><span style={{backgroundColor:'#0037ffbf'}}>[배차]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} <button onClick={()=>this.setRaceCallState(obj)} className="btn btn-default-danger">배차취소</button></li>);
+				result.push(<li><span style={{backgroundColor:'#0037ffbf'}}>[배차]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} 
+					<button data-id={obj.id} data-state={obj.state} onClick={(evt) => this.setRaceCallState(evt)} className="btn btn-default-danger">배차취소</button></li>);
 			}
 			else if(obj.state == 3){
 				result.push(<li><span style={{backgroundColor:'#04ff00bf'}}>[운행중]</span> {obj.name}( {obj.truck_number} ) 덤프 : {obj.truck_name} </li>);

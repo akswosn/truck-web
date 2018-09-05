@@ -39,7 +39,7 @@ class Control extends Component {
 		this.state.current_truck = [];
 		this.state.current_truck_markers = [];
 		this.state.current_truck_circle = [];
-
+		this.state.isChangeSelect = false;
 		var args = props.match.params;
 		
 		this.state.lat = args.lat ;
@@ -91,7 +91,10 @@ class Control extends Component {
 		this.setMarkers(0);
 	}
 	handleChangeSelect = (e) => {
-		
+		console.log('isChange',this.state.isChangeSelect);
+		if(this.state.isChangeSelect === false){
+			return;
+		}
 		this.setState({
 			e
 		});
@@ -119,6 +122,15 @@ class Control extends Component {
 
 		this.state.current_truck = [];
 		this.state.infoWindow = [];
+
+		for(var i in this.state.current_truck_markers){
+			this.state.current_truck_markers[i].setMap(null);
+		}
+		for(var i in this.state.current_truck_circle){
+			this.state.current_truck_circle[i].setMap(null);
+		}
+		this.state.current_truck_markers = [];
+		this.state.current_truck_circle = [];
 		//clear end
 
 		
@@ -207,6 +219,8 @@ class Control extends Component {
 		if(this.state.current_truck.length > 0){
 			this.truckGPS();
 		}
+
+		this.state.isChangeSelect = true;
 	}
 
 	truckGPS(){
@@ -422,7 +436,7 @@ class Control extends Component {
 					<span>
 						1.지도
 					</span>
-					<span>
+					<span id="selectView">
 						
 						
 						<Select inputProps={{ id: 'conssite' }} onChange={(e)=>this.handleChangeSelect(e)} id="conssite" options={this.state.options} value={this.state.conssiteVal}>
