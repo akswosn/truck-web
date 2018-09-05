@@ -107,7 +107,12 @@ class Detail extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			alert(res.responseJSON.error);
+			if(res.responseJSON === null || res.responseJSON === undefined){
+				alert('서버에러 관리자에게 문의해주세요');
+			}
+			else {
+				alert(res.responseJSON.error);
+			}
 		});
 	}
 	setRaceCallState(obj){
@@ -142,7 +147,12 @@ class Detail extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			alert(res.responseJSON.error);
+			if(res.responseJSON === null || res.responseJSON === undefined){
+				alert('서버에러 관리자에게 문의해주세요');
+			}
+			else {
+				alert(res.responseJSON.error);
+			}
 		});
 		//alert('배차설정 Action')
 	}

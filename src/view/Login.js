@@ -49,7 +49,12 @@ class Login extends Component {
 		}).fail((res) => {
 			console.log(res);
 			console.log(res.responseJSON);
-			alert(res.responseJSON.error);
+			if(res.responseJSON === null || res.responseJSON === undefined){
+				alert('서버에러 관리자에게 문의해주세요');
+			}
+			else {
+				alert(res.responseJSON.error);
+			}
 		});
 		
 		// fetch('http://52.79.177.67:5051/api/org_user/login', {
