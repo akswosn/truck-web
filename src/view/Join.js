@@ -57,7 +57,8 @@ class Join extends Component {
 		//console.log(this.fromData.get('name'));
 		$.ajax({
 			type: 'POST',
-			url: 'http://52.79.177.67:5051/api/org_user/reg',
+			// url: 'http://52.79.177.67:5051/api/org_user/reg',
+			url: 'http://localhost:5051/api/org_user/reg',
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
@@ -158,10 +159,7 @@ class Join extends Component {
 						<label className="form-label" htmlFor="buz_number">사업자번호</label>
 						<input className="form-input" placeholder="사업자번호"  id="buz_number" value={this.state.buz_number} onChange={e => this.handleChange(e)}/>
 					</div>
-					<div className="form-group">
-						<label className="form-label" htmlFor="buz_number">사업자번호</label>
-						<input className="form-input" placeholder="사업자번호"  id="buz_number" value={this.state.buz_number} onChange={e => this.handleChange(e)}/>
-					</div>
+					
 					<div className="btn-area">
 						<button className="btn" onClick={this.cancelAction}>취소</button>
 						<input type="submit" className="btn btn-primary"  value="가입"/>

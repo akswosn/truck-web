@@ -120,7 +120,7 @@ class Detail extends Component {
 		var id = $(evt.target).attr('data-id');
 		var state = $(evt.target).attr('data-state');
 		var self = this;
-		if(state === 1){//배차신청
+		if(Number(state) === 1){//배차신청
 			state =2;
 		} else {//배차취소
 			state =1;
