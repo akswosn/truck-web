@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 //import '../styles/app.css';
 import '../styles/truckweb.css';
 import $ from "jquery"
-
-
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 
 class Detail extends Component {
@@ -116,6 +116,7 @@ class Detail extends Component {
 			}
 		});
 	}
+	
 	setRaceCallState(evt){
 		var id = $(evt.target).attr('data-id');
 		var state = $(evt.target).attr('data-state');
@@ -153,7 +154,56 @@ class Detail extends Component {
 		});
 		//alert('배차설정 Action')
 	}
+	handleClickDelete(){
+		console.log(this.state.id);
+			console.log('del');
+			$.ajax({
+				type: 'POST',
+				url: 'http://52.79.177.67:5051/api/consite/delete',
+				data: {id : this.state.id},
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					user : JSON.stringify(this.user)
+				},
+				async : false                
+			}).done((res) => {
+				console.log(res);
+				alert('삭제되었습니다.');
+			    window.location.href='/control';
+			}).fail((res) => {
+				console.log(res);
+				console.log(res.responseJSON);
+				console.log(res.responseJSON);
+				if(res.responseJSON === null || res.responseJSON === undefined){
+					alert('서버에러 관리자에게 문의해주세요');
+				}
+				else {
+					alert(res.responseJSON.error);
+				}
+			});
+	}
+	delAction(){//52.79.177.67
+		var self = this;
+			
+		confirmAlert({
+			
+			customUI: ({ onClose }) => {
+				console.log(this.state);
+				return (
+					<div className='custom-ui'>
+					<h1>현장삭제</h1>
+					<p>삭제하시겠습니까?</p>
+					<button className="btn btn-primary" onClick={onClose}>No</button>
+					<button className="btn btn-success" onClick={() => {
+						self.handleClickDelete()
+						onClose()
+					}}>Yes</button>
+					</div>
+				)
+			}
+		  })
 
+	}
 	randerRaceCalls(){
 		var  result = [];
 
@@ -178,7 +228,6 @@ class Detail extends Component {
 			}
 			
 		}
-
 		
 		return result;
 	}
@@ -193,12 +242,16 @@ class Detail extends Component {
                         <h4 className="title">기본정보</h4>
                         <hr/>
                         <ul className="info-list">
+							<li>
+								<button className="btn btn-warning" onClick={()=>this.delAction()}>삭제</button>
+							</li>
                             <li><span>현장주소</span> : {this.state.addr}</li>
                             <li><span>목적지주소</span> : {this.state.to_addr}</li>
                             <li><span>연락처</span> : {this.state.contact}</li>
                             <li><span>토석수량</span> : {this.state.quantity}개</li>
                             <li><span>필요수량</span> : {this.state.need_quantity}개</li>
                             <li><span>운반료</span> :  {this.state.fee}원</li>
+							
                         </ul>
                     </div>
 
