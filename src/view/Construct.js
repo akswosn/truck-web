@@ -348,6 +348,13 @@ class Construct extends Component {
 			contact : this.state.contact
 		}
 		console.log(object);
+
+		if(object.addr === undefined || object.addr === null
+			|| object.to_addr === undefined || object.to_addr === null ){
+				alert('주소검색 필수사항입니다.');
+				return;
+		}
+
 		$.ajax({
 			type: 'POST',
 			url: 'http://52.79.177.67:5051/api/consite/reg',
