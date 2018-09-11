@@ -4,26 +4,6 @@ import '../styles/truckweb.css';
 // import axios from 'axios';
 import $ from "jquery"
 
-// import { confirmAlert } from 'react-confirm-alert'; // Import
-
-// const defaultOption = {
-// 	title: 'Title',
-// 	message: 'Message',
-// 	buttons: [
-// 	  {
-// 		label: 'Yes',
-// 		onClick: () => alert('Click Yes')
-// 	  },
-// 	  {
-// 		label: 'No',
-// 		onClick: () => alert('Click No')
-// 	  }
-// 	],
-// 	childrenElement: () => <div />,
-// 	customUI: ({ title, message, onClose }) => <div>Custom UI</div>,
-// 	willUnmount: () => {}
-// }
-
 class Join extends Component {
 	constructor(props) {
 		super(props);
@@ -33,7 +13,7 @@ class Join extends Component {
 		this.state.password = '';
 		this.state.owner = '';
 		this.state.contact = '';
-		this.state.biz_number = '';
+		this.state.buz_number = '';
 		
 		// This binding is necessary to make `this` work in the callback
 		this.cancelAction = this.cancelAction.bind(this);
@@ -57,8 +37,7 @@ class Join extends Component {
 		//console.log(this.fromData.get('name'));
 		$.ajax({
 			type: 'POST',
-			// url: 'http://52.79.177.67:5051/api/org_user/reg',
-			url: 'http://localhost:5051/api/org_user/reg',
+			url: 'http://52.79.177.67:5051/api/org_user/reg',
 			data: object,
 			headers: {'Access-Control-Allow-Origin': '*'},
                             
@@ -78,59 +57,16 @@ class Join extends Component {
 				alert(res.responseJSON.error);
 			}
 		});
-		// fetch('http://52.79.177.67:5051/api/org_user/reg', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(object),
-		// 	mode: 'no-cors',
-		// 	//type:'json',
-		// 	headers:{
-		// 		'Accept': 'application/json',
-      	// 		'Content-Type': 'application/json',
-		// 		'Access-Control-Allow-Origin':'*'
-		// 	},
-			
-        // })
-        // .then(function(response) {
-		// 	console.log(response);
-		// 	if(response.status != 200){
-		// 		//오류
-		// 		alert('회원가입 실패!');
-		// 	}
-			
-			
-        // })
-        // .then(function(data) {
-		// 	//
-		// 	if(data != null && data != undefined){
-		// 		alert('회원가입 되셨습니다.');
-		// 		window.location.href = '/login';
-		// 	}
-		// });	
-		
-		// axios({
-		// 	method: 'post',
-		// 	url: 'http://52.79.177.67:5051/api/org_user/reg',
-		// 	params: JSON.stringify(object),
-		// 	mode: 'no-cors',
-		// 	headers:{
-		// 	'Access-Control-Allow-Origin':'*'
-		// 	},
-		//   })
-		//   .then(function (response) {
-		// 	console.log(response);
-		//   })
-		//   .catch(function (error) {
-		// 	console.log(error);
-		// });
-		
-		
+		// fetch('http://52.79.1
 		
 	}
 
 	handleChange = (e) => {
+		console.log(e.target.id);
         this.setState({
             [e.target.id]: e.target.value
 		})
+		console.log(this.state);
 	}
 	
 	render () {
