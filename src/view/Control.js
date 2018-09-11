@@ -415,8 +415,8 @@ class Control extends Component {
 			window.location.href = '/login';
 			return;
 		}
-		this.user.id = id;
-		this.user.name = name;
+		this.user.id = escape(id);
+		this.user.name = escape(name);
 		this.user.password = sessionStorage.getItem("password");
 	}
 	render () {

@@ -212,6 +212,8 @@ class Construct extends Component {
 	}
 
 	getTruckType(){
+		console.log(JSON.stringify((this.user) ));
+
 		$.ajax({
 			type: 'POST',
 			url: 'http://52.79.177.67:5051/api/consite/trucktype',
@@ -322,8 +324,8 @@ class Construct extends Component {
 			window.location.href = '/login';
 			return;
 		}
-		this.user.id = id;
-		this.user.name = name;
+		this.user.id = escape(id);
+		this.user.name = escape(name);
 		this.user.password = sessionStorage.getItem("password");
 	}
 	submitAction(e){

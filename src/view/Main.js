@@ -69,22 +69,25 @@ class Main extends Component {
 
 	getLogin(){
 
-		this.user.id = sessionStorage.getItem("id");
-		this.user.name = sessionStorage.getItem("name");
-		this.user.password = sessionStorage.getItem("password");
+		this.user.id = escape(sessionStorage.getItem("id"));
+		this.user.name = escape(sessionStorage.getItem("name"));
+		this.user.password = escape(sessionStorage.getItem("password"));
 	}
 	componentWillMount(){
-		var self = this;
+		
 		var map = null;
 	
 		loadNavermapsScript({clientId:CLIENT_ID,submodules: ['panorama', 'geocoder']})
 		.then((navermaps)=>{
-			self.navermaps=navermaps;
+			this.navermaps=navermaps;
 			
-			self.setState({maploaded:true});
+			this.setState({maploaded:true});
 
-			
-			self.mapcontent = map;
+			map = new navermaps.Map('map',{
+				center : new navermaps.LatLng(37.2918741, 128.2710296),
+				zoom : 10
+			});
+			this.mapcontent = map;
 		})
 	  }
 
@@ -114,6 +117,7 @@ class Main extends Component {
 				<div className="main-info">
                 <img src="/images/main/main1.png"/>
 				</div>
+				<div id="map" style={{display:'none'}}></div>
 			</div>
     );
   }
