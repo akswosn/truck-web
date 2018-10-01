@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import '../styles/truckweb.css';
 import $ from "jquery"
 
-
+/**
+ * 로그인 Component
+ */
 class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -17,8 +19,11 @@ class Login extends Component {
 		this.submitAction = this.submitAction.bind(this);
 		this.setLogin = this.setLogin.bind(this);
 	  }
+
+	  //로그인 결과 저장 (sessionStorage)
+	  // submitAction => (로그인 성공시)
 	  setLogin(data){
-		console.log(data);
+		//console.log(data);
 		if(sessionStorage.length){
 			sessionStorage.clear();
 		}
@@ -26,8 +31,10 @@ class Login extends Component {
 			console.log(i);
 			sessionStorage.setItem(i, data[i]);
 		}
-		console.log(sessionStorage);
+		//console.log(sessionStorage);
 	  }
+
+	  //로그인 Action start
 	  submitAction(e){
 		e.preventDefault();
 		const object = {
@@ -56,43 +63,15 @@ class Login extends Component {
 				alert(res.responseJSON.error);
 			}
 		});
-		
-		// fetch('http://52.79.177.67:5051/api/org_user/login', {
-		// 	credentials: 'same-origin'  ,
-		// 	method: 'post',
-		// 	body: JSON.stringify(object),
-		// 	mode: 'no-cors',
-		// 	headers:{
-		// 		'Accept': 'application/json',
-      	// 		'Content-Type': 'application/json',
-		// 		'Access-Control-Allow-Origin':'*'
-		// 	},
-			
-		// }).then((data) => console.log(data))
-		
-		// .done((data) => {
-		// 	console.log(data);
-		// }).fail((jqXhr) => {
-		// 	console.log(jqXhr.responseJSON.message);
-		// });
-       
-        // .then(function(data) {
-		// 	//
-		// 	console.log('data', data);
-		// 	console.log(sessionStorage);
-		// 	if(data != null && data != undefined){
-				
-		// 		this.setLogint(data);
-		// 		window.location.href = '/';
-		// 	}
-		// });	
 	}
-
+	//UI 입력값 state 변경
 	handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
 		})
 	}
+	
+	//UI
 	render () {
 		return (
 			<div className="page-container">

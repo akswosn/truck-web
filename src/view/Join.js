@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-//import '../styles/app.css';
 import '../styles/truckweb.css';
-// import axios from 'axios';
 import $ from "jquery"
 
+/**
+ * 회원가입 컴포넌트
+ */
 class Join extends Component {
 	constructor(props) {
 		super(props);
@@ -19,10 +20,13 @@ class Join extends Component {
 		this.cancelAction = this.cancelAction.bind(this);
 		this.submitAction = this.submitAction.bind(this);		
 	}
+
+	//취소버튼 Action
 	cancelAction(e){
 		window.location.href='/';
 	}
 	
+	//가입 Action
 	submitAction(e){
 		e.preventDefault();
 		const object = {
@@ -32,8 +36,7 @@ class Join extends Component {
 			contact: this.state.contact,
 			buz_number: this.state.buz_number
 		}
-		
-		
+				
 		//console.log(this.fromData.get('name'));
 		$.ajax({
 			type: 'POST',
@@ -61,6 +64,7 @@ class Join extends Component {
 		
 	}
 
+	//UI 입력 값으로 state 변경 
 	handleChange = (e) => {
 		console.log(e.target.id);
         this.setState({
@@ -69,6 +73,7 @@ class Join extends Component {
 		console.log(this.state);
 	}
 	
+	//UI
 	render () {
 		return (
 			<div className="page-container ">

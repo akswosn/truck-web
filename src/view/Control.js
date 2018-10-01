@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import '../styles/app.css';
 import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';
@@ -11,6 +10,9 @@ import {
 
  const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
 
+ /**
+  * 관제시스템 컴포넌트
+  */
 class Control extends Component {
 	constructor(props) {
 
@@ -27,6 +29,7 @@ class Control extends Component {
 		this.user.password = '';
 		this.state.map = false;
 		this.state.zoom = 7;
+		// 현장 Marker, circle, window
 		this.state.markers = [];
 		this.state.circle = [];
 		this.state.infoWindow = [];
@@ -63,26 +66,32 @@ class Control extends Component {
 		this.initConssite();
 		
 	}
+
+	//Map 중앙이동 
+	//1. mapInit=> (맵생성후 주어진 좌표로 이동)
 	mapCenterMove(lat, lon){
 		this.state.map.setOptions({
 			center : new this.navermaps.LatLng(lat, lon)
 		});
 	}
+	//Map 줌 변경(현재 미사용)
 	mapZoomIn(){
 		this.state.zoom ++;
 		this.state.map.setOptions({
 			zoom : this.state.zoom 
 		});
 	}
+	//Map 새로고침(현재 미사용)
 	mapRefresh(){
 		this.state.zoom = 7;
 		this.mapInit(this.state.lat, this.state.lon, this.state.zoom);
 	}
+
+	//Map 초기화
+	//1. componentWillMount => 최초 맵 구성시 호출
 	mapInit(lat, lon, zoom){
 		this.setState({loaded:true});
-		//console.log(lat);
-		//console.log(lon);
-		//console.log(zoom);
+		
 		this.state.map  = new this.navermaps.Map('map',{
 			center : new this.navermaps.LatLng(lat, lon),
 			zoom : zoom
@@ -90,8 +99,10 @@ class Control extends Component {
 		
 		this.setMarkers(0);
 	}
+
+	//현장선택 event(selectBox)
 	handleChangeSelect = (e) => {
-		console.log('isChange',this.state.isChangeSelect);
+		// console.log('isChange',this.state.isChangeSelect);
 		if(this.state.isChangeSelect === false){
 			return;
 		}
@@ -107,6 +118,10 @@ class Control extends Component {
 		this.setMarkers(e.value);
 		
 	}
+
+	//현장 Marker 등록
+	//1.mapInit => 맵최초 호출시 현장 마커 등록
+	//2.handleChangeSelect => 현장 변경시 현장 마커 재등록(초기화후 등록))
 	setMarkers(id){
 		//this.state.markers = [];
 
@@ -143,10 +158,10 @@ class Control extends Component {
 					
 					
 				})
-				console.log('id',id);
-				console.log(this.state.form_markers[i]);
+				//console.log('id',id);
+				//console.log(this.state.form_markers[i]);
 				if(this.state.form_markers[i].race_state === 3 && id > 0){
-					console.log('truck push', this.state.form_markers[i]);
+					//console.log('truck push', this.state.form_markers[i]);
 					this.state.current_truck.push( this.state.form_markers[i]);
 				}
 	
@@ -174,16 +189,7 @@ class Control extends Component {
 			if(id === 0 || id === this.state.to_markers[i].id){
 				var marker = new this.navermaps.Marker({
 					position:new this.navermaps.LatLng(this.state.form_markers[i].to_lat, this.state.form_markers[i].to_lon),
-					map : this.state.map,
-					// icon:{
-					// 	url : '/images/main/truck.png',
-						
-					// 	size: new this.navermaps.Size(48, 48),
-					// 	scaledSize: new this.navermaps.Size(48, 48),
-					// 	origin: new this.navermaps.Point(0, 0),
-					// 	anchor: new this.navermaps.Point(12, 34)
-					// }
-						
+					map : this.state.map,						
 				});
 				var circle = new this.navermaps.Circle({
 					map: this.state.map,
@@ -205,17 +211,12 @@ class Control extends Component {
 				this.state.infoWindow.push(infoWindow);
 			}
 		}
-		//console.log(this.state.markers);
-		//console.log(this.state.infoWindow);
 
 		for (var i=0, ii= this.state.markers.length; i<ii; i++) {
 			this.navermaps.Event.addListener(this.state.markers[i], 'click', this.getClickHandler(i));
 		}
-		//this.navermaps.Event.addListener(this.state.map, 'click', this.allWindowClear());
-
-		//console.log('a',this.state.current_truck);
 		//add truck marker
-		console.log(this.state.current_truck);
+		//console.log(this.state.current_truck);
 		if(this.state.current_truck.length > 0){
 			this.truckGPS();
 		}
@@ -223,8 +224,11 @@ class Control extends Component {
 		this.state.isChangeSelect = true;
 	}
 
+//트럭 위치정보 조회
+//setMarkers 에서 호출 (아래의 조건 모두 만족)
+//1. 조건 id > 0 : selectbox 현장 선택상태
+//2. 조건 state = 3 : 운행상태 일경우
 	truckGPS(){
-		console.log('call truckGPS');
 		var self = this;
 		
 		if(this.state.current_truck.length ===0){
@@ -237,14 +241,14 @@ class Control extends Component {
 		//console.log(truck);
 		var socket = socketIOClient(url);
 		//const socket = socketIOClient(url+truck.race_id);
-		console.log(socket);
+		//console.log(socket);
 		socket.on('connection', (socket) => {
-			console.log(socket.id);
+			//console.log(socket.id);
 			
 		});
 		
 		socket.on('send:gps', (res) => {
-			console.log('send:gps',res);
+			//console.log('send:gps',res);
 			self.randerTruckGPS(res);
 		});
 
@@ -257,8 +261,11 @@ class Control extends Component {
 		}
 		
 	}
+
+	//GPS truck marker 등록
+	// call by truckGPS
 	randerTruckGPS(data){
-		console.log(this.state.current_truck_circle[data.driver_idx] !== undefined);
+		//console.log(this.state.current_truck_circle[data.driver_idx] !== undefined);
 		if(this.state.current_truck_markers[data.driver_idx] !== undefined
 			|| this.state.current_truck_circle[data.driver_idx] !== undefined){
 			this.state.current_truck_markers[data.driver_idx].setMap(null);
@@ -289,7 +296,7 @@ class Control extends Component {
 		this.state.current_truck_markers[data.driver_idx] = marker;
 		this.state.current_truck_circle[data.driver_idx] = circle;
 	}
-
+	//infowindow 초기화
 	allWindowClear (){
 		//console.log('allWindowClear');
 		for(var i in this.state.infoWindow){
@@ -299,11 +306,11 @@ class Control extends Component {
 			}
 		}
 	}
-
+	//info window open event
 	getClickHandler(seq) {
 		var self = this;
 		return function(e) {
-			console.log(self.state.markers);
+			// console.log(self.state.markers);
 			var marker = self.state.markers[seq];
 			var	infoWindow = self.state.infoWindow[seq];
 	
@@ -314,6 +321,9 @@ class Control extends Component {
 			}
 		}
 	}
+
+	//Rander 호출후 다음 실행되는 lifecicle event function
+	//Map 초기화 하기위해 사용
 	componentWillMount(){
 		//var HOME_PATH = window.HOME_PATH || '.';
 		var self = this;
@@ -354,6 +364,8 @@ class Control extends Component {
 		}
 		
 	}
+
+	//현장 리스트 검색(회사)
 	initConssite(){
 		var object = {}
 		$.ajax({
@@ -400,6 +412,7 @@ class Control extends Component {
 		}); 
 	}
 
+	//로그인 체크
 	getLogin(){
 		if(sessionStorage.length === 0 ){
 			alert('로그인후 이용해주세요');
@@ -419,16 +432,9 @@ class Control extends Component {
 		this.user.name = escape(name);
 		this.user.password = sessionStorage.getItem("password");
 	}
+	//UI
 	render () {
-		// handle form input and validation
-		// function getSelectOption(){
-		// 	return [
-		// 		{ label: 'Caramel',    value: 'caramel' },
-		// 		{ label: 'Chocolate',  value: 'chocolate' },
-		// 		{ label: 'Strawberry', value: 'strawberry' },
-		// 		{ label: 'Vanilla',    value: 'vanilla' }
-		// 	];
-		// }
+
 		return (
 			<div className="page-container">
 				

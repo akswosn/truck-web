@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import '../styles/app.css';
 import '../styles/truckweb.css';
 import $ from "jquery"
 import Select from 'react-select';
@@ -8,6 +7,7 @@ import {
 	
 	loadNavermapsScript
 } from 'react-naver-maps'
+//naver api client key
 const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
  
 
@@ -22,22 +22,20 @@ const customStyles = {
 	}
   };
 
-
+/**
+ * 현장 등록 Component
+ */
 class Construct extends Component {
 	constructor(props) {
 		super(props);
 
-		
+		//redux state 변수 내용 초기화
 		this.state = {
 			isToggleOn: true,
 			addrModal: false,
 			toAddrModal : false,
 			maploaded : false,
-			
-			//searchModal2: false
 		};
-
-		
 
 		this.state.name = '';
 		this.state.addr = '검색';
@@ -70,11 +68,10 @@ class Construct extends Component {
 		this.soilTypeList = [];
 		this.siteTypeList = [];
 
+		//select box 데이터 바인딩
 		this.getTruckType();
 		this.getSoilType();
 		this.getSiteType();
-
-		//modal
 		
 		this.openAddrModal = this.openAddrModal.bind(this);
 		this.openAfterAddrModal = this.openAfterAddrModal.bind(this);
@@ -82,36 +79,43 @@ class Construct extends Component {
 		this.openToAddrModal = this.openToAddrModal.bind(this);
 		this.openAfterToAddrModal = this.openAfterToAddrModal.bind(this);
 		this.closeToAddrModal = this.closeToAddrModal.bind(this);
-		//this.searchModal2 = this.searchModal2.bind(this);
-		//this.afterSearchModal2 = this.afterSearchModal2.bind(this);
-		//this.closeSearchModal2 = this.closeSearchModal2.bind(this);
 	}
+
+	//modal open (출발지)
 	openAddrModal(o){
 		this.setState({addrModal: true, addr:''});
-		
 	}
+
+	//deamed 처리 Action
 	openAfterAddrModal() {
 		// references are now sync'd and can be accessed.
 		this.subtitle.style.color = '#f00';
 	}
 	
+	//modal close 
 	closeAddrModal() {
 		this.setState({addrModal: false});
 	}
+
+	//modal open (도착지)
 	openToAddrModal(o){
 		this.setState({toAddrModal: true,to_addr:''});
-		
 	}
+
+	//deamed 처리 Action
 	openAfterToAddrModal() {
 		// references are now sync'd and can be accessed.
 		this.subtitle.style.color = '#f00';
 	}
 	
+	//modal close
 	closeToAddrModal() {
 		this.setState({toAddrModal: false});
 	}
+
+	//Rander 호출후 다음 실행되는 lifecicle event function
+	//Map 초기화 하기위해 사용(네이버 Map 주소검색 사용)
 	componentWillMount(){
-		
 		var map = null;
 	
 		loadNavermapsScript({clientId:CLIENT_ID,submodules: ['panorama', 'geocoder']})
@@ -127,9 +131,12 @@ class Construct extends Component {
 			this.mapcontent = map;
 		})
 	  }
+
+	//주소검색 1
+	//TODO : => 주소검색 2와 동일한 로직으로 Refactory 대상
 	searchAddrModal(self){
-		console.log(self.navermaps);
-		console.log(self.state);
+		// console.log(self.navermaps);
+		// console.log(self.state);
 
 		if(self.state.addr !== ''){
 			self.navermaps.Service.geocode({ address: self.state.addr }, function(status, response) {
@@ -156,10 +163,11 @@ class Construct extends Component {
 				}
 				
 			});
-		}
-	
-		
+		}		
 	}
+
+	//주소검색 1
+	//TODO => 주소검색 2와 동일한 로직으로 Refactory 대상
 	searchToAddrModal(self){
 		console.log(self.navermaps);
 		console.log(self.state);
@@ -190,8 +198,10 @@ class Construct extends Component {
 				
 			});
 		}
-		
 	}
+
+	//검색한 결과 데이터를 state에 바인딩 (주소검색1)
+	//TODO => 중복 함수
 	setAddr( e, obj ){
 		
 		this.setState({
@@ -201,6 +211,8 @@ class Construct extends Component {
 			addrModal: false
 		})		
 	}
+	//검색한 결과 데이터를 state에 바인딩 (주소검색2)
+	//TODO => 중복 함수
 	setToAddr( e, obj ){
 		
 		this.setState({
@@ -211,6 +223,7 @@ class Construct extends Component {
 		})		
 	}
 
+	//서버 데이터 조회 트럭 종류
 	getTruckType(){
 		console.log(JSON.stringify((this.user) ));
 
@@ -244,6 +257,8 @@ class Construct extends Component {
 			//alert(res.responseJSON.error);
 		});
 	}
+
+	//서버 데이터 조회 토석 종류
 	getSoilType(){
 		$.ajax({
 			type: 'POST',
@@ -275,6 +290,8 @@ class Construct extends Component {
 			return [];
 		});
 	}
+
+	//서버 데이터 조회 현장종류
 	getSiteType(){
 		$.ajax({
 			type: 'POST',
@@ -307,6 +324,7 @@ class Construct extends Component {
 		});
 	}
 
+	//로그인 정보 체크
 	getLogin(){
 		if(sessionStorage.length == 0 ){
 			alert('로그인후 이용해주세요');
@@ -328,6 +346,8 @@ class Construct extends Component {
 		this.user.name = escape(name);
 		this.user.password = sessionStorage.getItem("password");
 	}
+
+	//등록 Action
 	submitAction(e){
 		e.preventDefault();
 		console.log(this.state);
@@ -382,19 +402,24 @@ class Construct extends Component {
 		}); 
 		
 	}
+
+	//input 변경 이벤트 변경된 값을 state에 바인딩
 	handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
 		})
 	}
-//handleChangeSoilType
+
+	//select 변경 이벤트 변경된 값을 state에 바인딩
 	handleChangeSelect = (id, e) => {
-		console.log(e);
-		console.log(id);
+		// console.log(e);
+		// console.log(id);
 		this.setState({
 			[id]: e
 		})
 	}
+
+	//UI
 	render () {
 		
 		return (

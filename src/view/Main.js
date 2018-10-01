@@ -6,6 +6,9 @@ import {
 } from 'react-naver-maps'
 const CLIENT_ID = 'zgoUlbG7eyzVh2dgRvQO'
 
+/**
+ * 메인 컴포넌트
+ */
 class Main extends Component {
 	constructor(props) {
 		super(props);
@@ -22,12 +25,14 @@ class Main extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.getLogin();
 	}
+	//입력값 state 세팅
 	handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
 		})
 	}
 
+	//주소 검색
 	getSearch(){
 		var self = this;
 		if(this.state.addr !== ''){
@@ -67,12 +72,16 @@ class Main extends Component {
 		}
 	}
 
+	//로그인 정보 조회
 	getLogin(){
 
 		this.user.id = escape(sessionStorage.getItem("id"));
 		this.user.name = escape(sessionStorage.getItem("name"));
 		this.user.password = escape(sessionStorage.getItem("password"));
 	}
+
+	//Rander 호출후 다음 실행되는 lifecicle event function
+	//Map 초기화 하기위해 사용
 	componentWillMount(){
 		
 		var map = null;
@@ -91,6 +100,7 @@ class Main extends Component {
 		})
 	  }
 
+	  //UI
   render() {
     return (
       <div className="page-container">

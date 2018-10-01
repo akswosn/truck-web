@@ -18,37 +18,10 @@ var divStyle = {
 	'paddingLeft':'10px',
 	'fontWeight':'bold'
 };
-// const PageNav = (menuStyle) => (
-	
-//   <Router>
-// 		<div className="page-wrapper">
-// 			<nav className="primary-nav">
-// 				<Link to="/" className="logo" style={divStyle}>Truck Call</Link>
-// 				<Link className="primary-nav__item" to="/control">관제시스템</Link>
-// 				<Link className="primary-nav__item" to="/construct">현장정보입력</Link>
-// 				{/*<Link className="primary-nav__item" to="push">푸쉬알림</Link>*/}
-				
-// 				<Link className="primary-nav__item" to="/login" style={menuStyle}>로그인</Link>
-// 				<Link className="primary-nav__item" to="/join" style={menuStyle}>회원가입</Link>
-// 			</nav>
-// 			<SubNav/>
-// 			<div className="page-body">
-// 					<Route exact path="/" component={Main} />
-					
-// 					<Route path="/control" component={Control} />
-// 					<Route path="/construct" component={Construct} />
-// 					<Route path="/push" component={Push} />
-// 					<Route path="/login" component={Login} />
-// 					<Route path="/join" component={Join} />
-// 					<Route path="/search/:lat/:lon" component={Search} />
-// 					<Route path="/detail/:id" component={Detail} />
-// 			</div>
-// 		</div>
-//   </Router>
 
-// );
-
+//SubNavTitle Component
 class SubNav extends React.Component {
+		//uri로 메뉴명 리턴
 		getTitle(){
 			var title = {
 				'/join':'회원가입',
@@ -66,6 +39,7 @@ class SubNav extends React.Component {
 			}
 			return title[uri];
 		}
+		//메뉴 노출 여부
 		getdisPlay(){
 			
 			var url = window.location.href;
@@ -79,6 +53,7 @@ class SubNav extends React.Component {
 	
 			return {display:result};
 		}
+		//back action event => home
 		gotoBack() {
 			window.location.href='/';
 		}
@@ -92,6 +67,7 @@ class SubNav extends React.Component {
 		}
 	 }
 
+// Start React
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -103,11 +79,15 @@ class App extends React.Component {
 		this.getMenuDisplay();
 		this.logout = this.logout.bind(this);
 	}
+	//Logout 
 	logout(){
 		sessionStorage.clear();
 		window.location.href = '/login';
 		return;
 	}
+	/**
+	 * login / logout Menu Display change
+	 */
 	getMenuDisplay(){
 		
 		var id = sessionStorage.getItem("id");
@@ -123,7 +103,7 @@ class App extends React.Component {
 			this.state.menuDisplay.display = 'none';
 			this.state.logoutDisplay.display ='inline-block';
 		}
-		console.log('data', this.state.menuDisplay);
+		// console.log('data', this.state.menuDisplay);
 		return this.state.menuDisplay;
 	}
 
@@ -158,11 +138,6 @@ class App extends React.Component {
 						</div>
 					</div>
 			</Router>
-					
-					{/*<SubNav/>*/}
-					
-					
-				
 			</div>
 		);
 	}

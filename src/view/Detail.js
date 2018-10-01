@@ -5,7 +5,9 @@ import $ from "jquery"
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-
+/**
+ * 현장 상세정보 컴포넌트
+ */
 class Detail extends Component {
 	constructor(props) {
 		super(props);
@@ -31,6 +33,7 @@ class Detail extends Component {
         this.getDetail();
 		this.getRaceCalls();
 	}
+	//로그인체크
 	getLogin(){
 		console.log(sessionStorage)
 		if(sessionStorage.length === 0 ){
@@ -51,6 +54,8 @@ class Detail extends Component {
 		this.user.name = escape(name);
 		this.user.password = sessionStorage.getItem("password");
 	}
+
+	//운행정보 조회
 	getRaceCalls(){
 		console.log(this.state.id);
 		var self = this;
@@ -76,6 +81,8 @@ class Detail extends Component {
 			
 		});
 	}
+
+	//현장 상세정보 조회
     getDetail(){
        
         var self = this;
@@ -117,6 +124,7 @@ class Detail extends Component {
 		});
 	}
 	
+	//현장 정보 변경 state 1=>2, 2=>1
 	setRaceCallState(evt){
 		var id = $(evt.target).attr('data-id');
 		var state = $(evt.target).attr('data-state');
@@ -154,6 +162,8 @@ class Detail extends Component {
 		});
 		//alert('배차설정 Action')
 	}
+
+	//현장 삭제
 	handleClickDelete(){
 		console.log(this.state.id);
 			console.log('del');
@@ -182,7 +192,9 @@ class Detail extends Component {
 				}
 			});
 	}
-	delAction(){//52.79.177.67
+
+	//현장삭제 popup open
+	delAction(){
 		var self = this;
 			
 		confirmAlert({
@@ -204,6 +216,8 @@ class Detail extends Component {
 		  })
 
 	}
+
+	//현장 운행정보 rander
 	randerRaceCalls(){
 		var  result = [];
 
@@ -231,6 +245,8 @@ class Detail extends Component {
 		
 		return result;
 	}
+
+	//UI
 	render () {
 		
 		return (
