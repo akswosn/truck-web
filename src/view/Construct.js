@@ -369,10 +369,28 @@ class Construct extends Component {
 		}
 		console.log(object);
 
+		
+		if(object.name === undefined){
+			alert('현장명은 필수사항입니다.');
+			return;
+		}
 		if(object.addr === undefined || object.addr === null
 			|| object.to_addr === undefined || object.to_addr === null ){
 				alert('주소검색 필수사항입니다.');
 				return;
+		}
+		
+		if(object.soil_type === undefined){
+			alert('토석종류 필수사항입니다.');
+			return;
+		}
+		if(object.site_type === undefined){
+			alert('현장종류 필수사항입니다.');
+			return;
+		}
+		if(object.truck_type === undefined){
+			alert('덤프종류 필수사항입니다.');
+			return;
 		}
 
 		$.ajax({
