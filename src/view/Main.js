@@ -106,7 +106,7 @@ class Main extends Component {
       <div className="page-container">
 				<ul className="main-content-seach">
 					<li className="item-1">"획기적인 덤프배차솔루션 'TRUCK CALL'입니다."</li>
-					<li className="item-2">근처 현장정보 및 덤프를 찾아보세요</li>
+					<li className="item-2">근처 현장정보 및 덤프를 찾아보세요.</li>
 					<li className="item-3">
 						<div className="u-margin-bottom-lg">
 							<div className="input-group">
